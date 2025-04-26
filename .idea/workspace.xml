@@ -1,20 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="78f3a609-f353-40ab-9dd1-e15cd4802939" name="Changes" comment="" />
+    <list default="true" id="78f3a609-f353-40ab-9dd1-e15cd4802939" name="Changes" comment="Create django-project">
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/about-bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/audi-a8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/bmw-7-series.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/hero-banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/mercedes-s-class.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/showroom-interior.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/team1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/team2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/static/main/img/team3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/about.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/car_order.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/contact.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/tradein_requests.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2wG03NQ6tsfWbAMnBY1uyqDdWKE" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/lilma/PycharmProjects/CarShowroom/carshowroom/main/static/main/img"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lilma\PycharmProjects\CarShowroom\carshowroom\main\static\main\img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lilma\PycharmProjects\CarShowroom\carshowroom\main\static\main\img" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -32,6 +87,19 @@
       <option name="presentableId" value="Default" />
       <updated>1745652402878</updated>
     </task>
+    <task id="LOCAL-00001" summary="Create django-project">
+      <option name="closed" value="true" />
+      <created>1745652702717</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745652702717</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create django-project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create django-project" />
   </component>
 </project>

@@ -1,0 +1,87 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}О нас | Rames Dipons{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <section class="about-hero">
+        <div class="container">
+            <h1 class="display-4">Rames Dipons — история превосходства</h1>
+            <p class="lead">Более 15 лет дарим клиентам безупречный сервис и эксклюзивные автомобили</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <h2><i class="fas fa-medal text-gold me-3"></i>Наши преимущества</h2>
+                    <ul class="styled-list">
+                        <li>Официальный дилер 12 премиальных марок</li>
+                        <li>Собственный сервисный центр с инженерами-экспертами</li>
+                        <li>Гарантия лучшей цены в регионе</li>
+                        <li>Персональный менеджер для каждого клиента</li>
+                        <li>Программа лояльности для постоянных клиентов</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <h2><i class="fas fa-history text-gold me-3"></i>Наша история</h2>
+                    <p>Основанный в 2008 году, автосалон Rames Dipons начал свою деятельность как небольшой showroom эксклюзивных автомобилей. Сегодня это:</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">лет на рынке</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">2500+</div>
+                            <div class="stat-label">довольных клиентов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">брендов в портфолио</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">гарантия качества</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="team-section mt-5">
+            <h2 class="text-center mb-5"><i class="fas fa-users text-gold me-3"></i>Наша команда</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{% static 'main/img/team1.jpg' %}" class="team-photo" alt="Директор">
+                        <h3>Рамзес Дипонс</h3>
+                        <p class="position">Основатель и CEO</p>
+                        <p class="bio">25 лет опыта в автомобильном бизнесе. Создал концепцию premium-обслуживания.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{% static 'main/img/team2.png' %}" class="team-photo" alt="Менеджер">
+                        <h3>Александра Климова</h3>
+                        <p class="position">Главный менеджер</p>
+                        <p class="bio">Знает всё о каждом автомобиле в нашем салоне. Ваш персональный консультант.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="{% static 'main/img/team3.jpg' %}" class="team-photo" alt="Технический специалист">
+                        <h3>Дмитрий Вольнов</h3>
+                        <p class="position">Главный инженер</p>
+                        <p class="bio">Сертифицированный специалист по диагностике премиальных автомобилей.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

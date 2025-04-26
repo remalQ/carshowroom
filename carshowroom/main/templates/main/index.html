@@ -1,0 +1,91 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Премиальный автосалон Rames Dipons{% endblock %}
+
+{% block content %}
+<!-- Герой-баннер -->
+<section class="hero-banner mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Премиальные автомобили в Rames Dipons</h1>
+                <p class="lead mb-4">Официальный дилер Mercedes-Benz, BMW, Audi и Porsche в Москве</p>
+                <a href="#featured" class="btn btn-primary btn-lg px-4 me-2">Выбрать авто</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-4">Консультация</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Популярные модели -->
+<section id="featured" class="mb-5 py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Рекомендуемые модели</h2>
+        <div class="row g-4">
+            {% for car in featured_cars %}
+            <div class="col-md-4">
+                <div class="card car-card h-100">
+                    <img src="{% static 'main/img/' %}{{ car.image }}" class="card-img-top" alt="{{ car.model }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.model }}</h5>
+                        <div class="car-specs mb-3">
+                            <span class="badge bg-light text-dark me-2">{{ car.year }} г.в.</span>
+                            <span class="badge bg-light text-dark">{{ car.engine }}</span>
+                        </div>
+                        <p class="card-text fs-4 text-primary fw-bold">{{ car.price }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="{% url 'car_detail' slug=car.slug %}" class="btn btn-outline-primary w-100">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Спецпредложения -->
+<section class="bg-light py-5 mb-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Специальные предложения</h2>
+        <div class="row g-4 justify-content-center">
+            {% for offer in special_offers %}
+            <div class="col-md-5">
+                <div class="card offer-card h-100 border-0">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mb-3">
+                            <i class="fas {{ offer.icon }} fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4">{{ offer.title }}</h3>
+                        <p class="mb-0">{{ offer.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- О компании -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{% static 'main/img/showroom-interior.jpg' %}" class="img-fluid rounded" alt="Салон Rames Dipons">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-4">Официальный дилер премиальных марок</h2>
+                <p>Автосалон Rames Dipons - это эксклюзивный представитель мировых автомобильных брендов премиум-класса в Москве. Мы предлагаем:</p>
+                <ul class="list-check">
+                    <li>Новые автомобили 2022-2023 года выпуска</li>
+                    <li>Сертифицированный предпродажный осмотр</li>
+                    <li>Гарантия лучшей цены на рынке</li>
+                    <li>Индивидуальные программы кредитования</li>
+                </ul>
+                <a href="{% url 'about' %}" class="btn btn-outline-primary mt-3">Подробнее о компании</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

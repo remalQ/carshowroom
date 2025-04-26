@@ -1,0 +1,43 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Наши контакты</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-map-marker-alt"></i> Адрес</h5>
+                    <p class="card-text">{{ address }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-phone"></i> Телефон</h5>
+                    <p class="card-text">{{ phone }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-envelope"></i> Email</h5>
+                    <p class="card-text">{{ email }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-clock"></i> Часы работы</h5>
+                    <p class="card-text">{{ work_hours }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
