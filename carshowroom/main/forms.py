@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import CarOrder, TradeInRequest
+from .models import CarOrder, TradeInRequest, CreditRequest, SaleContract, CarConfiguration, SalesEmployee
 
 
 class ProfileForm(forms.ModelForm):
@@ -13,6 +13,12 @@ class ProfileForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+
+class SalesEmployeeForm(forms.ModelForm):
+    class Meta:
+        model = SalesEmployee
+        fields = ['department']
 
 
 class RegisterForm(UserCreationForm):
@@ -36,10 +42,28 @@ class RegisterForm(UserCreationForm):
 class CarOrderForm(forms.ModelForm):
     class Meta:
         model = CarOrder
-        fields = ['car_model', 'full_name', 'phone', 'email', 'comment']
+        fields = ['car', 'status', 'comment', 'phone']
 
 
 class TradeInForm(forms.ModelForm):
     class Meta:
         model = TradeInRequest
         fields = ['current_car_brand', 'current_car_model', 'year', 'mileage', 'desired_car', 'phone', 'email', 'comment']
+
+
+class CreditRequestForm(forms.ModelForm):
+    class Meta:
+        model = CreditRequest
+        fields = ['car', 'full_name', 'phone', 'email', 'amount', 'duration']
+
+
+class UsedCarSaleForm(forms.ModelForm):
+    class Meta:
+        model = SaleContract
+        fields = ['car', 'sale_price', 'sale_type']
+
+
+class CarConfigurationForm(forms.ModelForm):
+    class Meta:
+        model = CarConfiguration
+        fields = ['car', 'color', 'engine_type', 'interior', 'price', 'available']

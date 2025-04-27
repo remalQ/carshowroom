@@ -1,0 +1,36 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Профиль сотрудника{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Мой профиль</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Имя:</strong> {{ employee.user.get_full_name }}</p>
+                    <p><strong>Отдел:</strong> {{ employee.department }}</p>
+                    <p><strong>Дата приема на работу:</strong> {{ employee.hired_on }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Редактировать профиль</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

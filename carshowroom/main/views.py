@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, RegisterForm
-from .models import TestDrive
-from .forms import CarOrderForm, TradeInForm
+from django.contrib.auth import logout
+from django.core.exceptions import PermissionDenied
+from .forms import ProfileForm, RegisterForm, CarOrderForm, TradeInForm, CreditRequestForm, \
+    UsedCarSaleForm, CarConfigurationForm, SalesEmployeeForm
+from .models import TestDrive, Car, SaleContract, SalesEmployee, CarOrder, CreditRequest, TradeInRequest
 from django.contrib import messages
-from .models import Car
 
 
 def index(request):
     featured_cars = Car.objects.all()[:3]  # Берем первые 3 автомобиля
+    can_access_sales_dashboard = request.user.has_perm('sales.can_access_dashboard')
 
     context = {
+        'can_access_sales_dashboard': can_access_sales_dashboard,
         'featured_cars': featured_cars,  # Передаем QuerySet вместо списка
         'special_offers': [
             {
@@ -48,10 +51,12 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Автоматический вход после регистрации
             from django.contrib.auth import login
             login(request, user)
-            return redirect('profile')
+            if SalesEmployee.objects.filter(user=user).exists():
+                return redirect('sales_employee_profile')
+            else:
+                return redirect('profile')
     else:
         form = RegisterForm()
     return render(request, 'main/register.html', {'form': form})
@@ -59,20 +64,40 @@ def register(request):
 
 @login_required
 def profile(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-    else:
-        form = ProfileForm(instance=request.user)
+    try:
+        # Пытаемся найти сотрудника по текущему пользователю
+        employee = SalesEmployee.objects.get(user=request.user)
 
-    context = {
-        'user': request.user,
-        'form': form,
-        'test_drives': TestDrive.objects.filter(user=request.user),
-    }
-    return render(request, 'main/profile.html', context)
+        if request.method == 'POST':
+            form = SalesEmployeeForm(request.POST, instance=employee)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Профиль сотрудника успешно обновлен.')
+                return redirect('profile')
+        else:
+            form = SalesEmployeeForm(instance=employee)
+
+        context = {
+            'form': form,
+            'employee': employee,
+        }
+        return render(request, 'main/sales_profile.html', context)
+
+    except SalesEmployee.DoesNotExist:
+        # Если это не сотрудник — показать обычный профиль
+        orders = CarOrder.objects.filter(user=request.user)
+        test_drives = TestDrive.objects.filter(user=request.user)
+        trade_in_requests = TradeInRequest.objects.filter(user=request.user)
+        credit_requests = CreditRequest.objects.filter(user=request.user)
+
+        context = {
+            'user': request.user,
+            'orders': orders,
+            'test_drives': test_drives,
+            'trade_in_requests': trade_in_requests,
+            'credit_requests': credit_requests,
+        }
+        return render(request, 'main/profile.html', context)
 
 
 def car_order_view(request):
@@ -89,20 +114,119 @@ def car_order_view(request):
     return render(request, 'main/car_order.html', {'form': form})
 
 
-def tradein_request_view(request):
+@login_required
+def trade_in_request(request):
     if request.method == 'POST':
         form = TradeInForm(request.POST)
         if form.is_valid():
-            tradein = form.save(commit=False)
-            tradein.user = request.user
-            tradein.save()
-            messages.success(request, 'Заявка на трейд-ин отправлена!')
-            return redirect('index')
+            trade_in = form.save(commit=False)
+            trade_in.user = request.user  # привязываем заявку к текущему пользователю
+            trade_in.save()
+            return redirect('trade_in_success')  # перенаправление на страницу успеха
     else:
         form = TradeInForm()
-    return render(request, 'main/tradein_request.html', {'form': form})
+    return render(request, 'main/trade_in_form.html', {'form': form})
+
+
+def trade_in_success(request):
+    return render(request, 'main/trade_in_success.html')
 
 
 def car_detail(request, slug):
     car = get_object_or_404(Car, slug=slug)
     return render(request, 'main/car_detail.html', {'car': car})
+
+
+def credit_info(request):
+    if request.method == 'POST':
+        form = CreditRequestForm(request.POST)
+        if form.is_valid():
+            credit_request = form.save(commit=False)
+            credit_request.user = request.user  # Привязка заявки к текущему пользователю
+            credit_request.save()
+            return redirect('credit_thanks')  # Перенаправление на страницу благодарности
+    else:
+        form = CreditRequestForm()
+
+    return render(request, 'main/credit_info.html', {'form': form})
+
+
+def credit_thanks(request):
+    return render(request, 'main/credit_thanks.html')
+
+
+@login_required
+def used_car_sale(request):
+    if request.method == 'POST':
+        form = UsedCarSaleForm(request.POST)
+        if form.is_valid():
+            sale = form.save(commit=False)
+            sale.user = request.user
+            # Получаем сотрудника, который оформляет сделку
+            employee = SalesEmployee.objects.get(user=request.user)
+            sale.sales_employee = employee  # Привязываем сотрудника
+            sale.sale_type = 'used'
+            sale.save()
+            messages.success(request, 'Автомобиль с пробегом продан!')
+            return redirect('sale_success')
+    else:
+        form = UsedCarSaleForm()
+
+    return render(request, 'main/used_car_sale.html', {'form': form})
+
+
+@login_required
+def new_car_sale(request):
+    if request.method == 'POST':
+        form = CarConfigurationForm(request.POST)
+        if form.is_valid():
+            config = form.save(commit=False)
+            config.save()
+
+            # Получаем сотрудника, который оформляет сделку
+            employee = SalesEmployee.objects.get(user=request.user)
+
+            sale = SaleContract.objects.create(
+                car=config.car,
+                user=request.user,
+                sale_price=config.price,
+                sale_type='new',
+                sales_employee=employee  # Привязка сотрудника
+            )
+            messages.success(request, 'Новый автомобиль продан!')
+            return redirect('sale_success')
+    else:
+        form = CarConfigurationForm()
+
+    return render(request, 'main/new_car_sale.html', {'form': form})
+
+
+def sale_success(request):
+    return render(request, 'main/sale_success.html')
+
+
+@login_required
+def sales_employee_profile(request):
+    try:
+        employee = SalesEmployee.objects.get(user=request.user)
+    except SalesEmployee.DoesNotExist:
+        raise PermissionDenied  # Если сотрудник не найден, можно перенаправить на страницу ошибки
+
+    if request.method == 'POST':
+        form = SalesEmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('sales_employee_profile')  # Перенаправление после сохранения
+    else:
+        form = SalesEmployeeForm(instance=employee)
+
+    context = {
+        'form': form,
+        'employee': employee,
+    }
+    return render(request, 'main/sales_employee_profile.html', context)
+
+
+def user_logout(request):
+    logout(request)  # Выход из системы
+    return redirect('/')  # Перенаправление на главную страницу

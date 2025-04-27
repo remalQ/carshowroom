@@ -70,6 +70,115 @@
                     <a href="#" class="btn btn-outline-primary">Записаться на тест-драйв</a>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Мои заказы</h4>
+                </div>
+                <div class="card-body">
+                    {% if orders %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Автомобиль</th>
+                                        <th>Дата заказа</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.car.model }}</td>
+                                        <td>{{ order.order_date }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ order.status|lower }} text-dark">
+                                                {{ order.get_status_display }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>У вас нет заказов</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Мои заявки на трейд-ин</h4>
+                </div>
+                <div class="card-body">
+                    {% if trade_in_requests %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Текущий автомобиль</th>
+                                        <th>Желаемая модель</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request in trade_in_requests %}
+                                    <tr>
+                                        <td>{{ request.current_car_brand }} {{ request.current_car_model }} ({{ request.year }}) - {{ request.mileage }} км</td>
+                                        <td>{{ request.desired_car }}</td>
+                                        <td>
+                                            <span class="badge" style="background-color: black; color: white;">
+                                                {{ request.get_status_display }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>У вас нет заявок на трейд-ин</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Мои заявки на кредит</h4>
+                </div>
+                <div class="card-body">
+                    {% if credit_requests %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Автомобиль</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request in credit_requests %}
+                                    <tr>
+                                        <td>{{ request.car.model }}</td>
+                                        <td>{{ request.amount }} ₽</td>
+                                        <td>
+                                            <span class="badge" style="background-color: black; color: white;">
+                                                {{ request.get_status_display }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>У вас нет заявок на кредит</p>
+                    {% endif %}
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

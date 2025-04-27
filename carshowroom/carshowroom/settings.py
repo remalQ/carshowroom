@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -129,10 +130,7 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/'
-
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/profile/'
-LOGOUT_REDIRECT_URL = '/'
 
 # Настройки для загрузки файлов
 MEDIA_URL = '/media/'

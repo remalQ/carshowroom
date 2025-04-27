@@ -1,4 +1,6 @@
 {% extends 'main/layout.html' %}
+{% load static %}
+{% load custom_filters %}
 
 {% block title %}{{ car.model }} - Rames Dipons{% endblock %}
 
@@ -8,12 +10,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-4">
-                <img src="{% static 'main/img/' %}{{ car.image }}" class="img-fluid" alt="{{ car.model }}">
+                <img src="{{ car.image.url }}" class="img-fluid" alt="{{ car.model }}">
+
             </div>
             <div class="col-lg-6">
                 <h1 class="display-4">{{ car.model }}</h1>
                 <p class="lead">{{ car.year }} г.в. | {{ car.engine }}</p>
-                <p class="fs-4 text-primary fw-bold">{{ car.price }}</p>
+                <p class="fs-4 text-primary fw-bold">
+                    {{ car.price|money_format }}
+                </p>
                 <p>{{ car.description }}</p>
                 <a href="{% url 'car_order' %}" class="btn btn-primary btn-lg">Оформить заказ</a>
             </div>

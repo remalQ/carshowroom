@@ -1,0 +1,36 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Заявка на кредит{% endblock %}
+
+{% block content %}
+<section class="credit-request py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Заявка на кредит</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form.car.label }}: {{ form.car }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.full_name.label }}: {{ form.full_name }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.phone.label }}: {{ form.phone }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.email.label }}: {{ form.email }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.amount.label }}: {{ form.amount }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.duration.label }}: {{ form.duration }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg mt-4">Подать заявку</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

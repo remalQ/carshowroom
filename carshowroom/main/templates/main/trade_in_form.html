@@ -1,0 +1,15 @@
+{% extends 'main/layout.html' %}
+{% block title %}Трейд-ин - Rames Dipons{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Заявка на Трейд-ин</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Отправить заявку</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

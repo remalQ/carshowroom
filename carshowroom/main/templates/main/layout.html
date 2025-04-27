@@ -1,4 +1,5 @@
 {% load static %}
+{% load employee_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,52 +22,60 @@
             </div>
             <nav class="sidebar-nav">
                 <ul class="nav-list">
-            <li class="nav-item">
-                <a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">
-                    <i class="fas fa-home nav-icon"></i>
-                    <span class="nav-text">Главная</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'about' %}" class="nav-link {% if request.path == '/about/' %}active{% endif %}">
-                    <i class="fas fa-info-circle nav-icon"></i>
-                    <span class="nav-text">Про нас</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'contact' %}" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">
-                    <i class="fas fa-envelope nav-icon"></i>
-                    <span class="nav-text">Контакты</span>
-                </a>
-            </li>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a href="{% url 'profile' %}" class="nav-link">
-                    <i class="fas fa-user nav-icon"></i>
-                    <span class="nav-text">Профиль</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'logout' %}" class="nav-link">
-                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                    <span class="nav-text">Выйти</span>
-                </a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a href="{% url 'login' %}" class="nav-link">
-                    <i class="fas fa-sign-in-alt nav-icon"></i>
-                    <span class="nav-text">Войти</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'register' %}" class="nav-link">
-                    <i class="fas fa-user-plus nav-icon"></i>
-                    <span class="nav-text">Регистрация</span>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
+                    <li class="nav-item">
+                        <a href="{% url 'index' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                            <i class="fas fa-home nav-icon"></i>
+                            <span class="nav-text">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'about' %}" class="nav-link {% if request.path == '/about/' %}active{% endif %}">
+                            <i class="fas fa-info-circle nav-icon"></i>
+                            <span class="nav-text">Про нас</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contact' %}" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">
+                            <i class="fas fa-envelope nav-icon"></i>
+                            <span class="nav-text">Контакты</span>
+                        </a>
+                    </li>
+                    {% if user.is_authenticated and user|has_salesemployee %}
+                        <li class="nav-item">
+                            <a href="{% url 'sales_employee_profile' %}" class="nav-link">
+                                <i class="fas fa-user-tie nav-icon"></i>
+                                <span class="nav-text">Профиль сотрудника</span>
+                            </a>
+                        </li>
+                    {% elif user.is_authenticated and not user|has_salesemployee %}
+                        <li class="nav-item">
+                            <a href="{% url 'profile' %}" class="nav-link">
+                                <i class="fas fa-user nav-icon"></i>
+                                <span class="nav-text">Профиль</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link">
+                                <i class="fas fa-sign-out-alt nav-icon"></i>
+                                <span class="nav-text">Выйти</span>
+                            </a>
+                        </li>
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link">
+                                <i class="fas fa-sign-in-alt nav-icon"></i>
+                                <span class="nav-text">Войти</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}" class="nav-link">
+                                <i class="fas fa-user-plus nav-icon"></i>
+                                <span class="nav-text">Регистрация</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </nav>
         </aside>
         <main>

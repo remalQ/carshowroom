@@ -1,9 +1,0 @@
-{% extends 'main/layout.html' %}
-{% block content %}
-<h2>Трейд-ин заявка</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Отправить</button>
-</form>
-{% endblock %}

@@ -1,10 +1,11 @@
 {% extends 'main/layout.html' %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Премиальный автосалон Rames Dipons{% endblock %}
 
 {% block content %}
-<!-- Герой-баннер -->
+<!-- Баннер -->
 <section class="hero-banner mb-5">
     <div class="container">
         <div class="row align-items-center">
@@ -26,14 +27,17 @@
             {% for car in featured_cars %}
             <div class="col-md-4">
                 <div class="card car-card h-100">
-                    <img src="{% static 'main/img/' %}{{ car.image }}" class="card-img-top" alt="{{ car.model }}">
+                    <img src="{{ car.image.url }}" class="img-fluid" alt="{{ car.model }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ car.model }}</h5>
                         <div class="car-specs mb-3">
                             <span class="badge bg-light text-dark me-2">{{ car.year }} г.в.</span>
                             <span class="badge bg-light text-dark">{{ car.engine }}</span>
                         </div>
-                        <p class="card-text fs-4 text-primary fw-bold">{{ car.price }}</p>
+                        <p class="fs-4 text-primary fw-bold">
+                            {{ car.price|money_format }}
+                        </p>
+
                     </div>
                     <div class="card-footer bg-transparent">
                         <a href="{% url 'car_detail' slug=car.slug %}" class="btn btn-outline-primary w-100">Подробнее</a>
@@ -45,6 +49,7 @@
     </div>
 </section>
 
+<!-- Спецпредложения -->
 <!-- Спецпредложения -->
 <section class="bg-light py-5 mb-5">
     <div class="container">
@@ -59,6 +64,11 @@
                         </div>
                         <h3 class="h4">{{ offer.title }}</h3>
                         <p class="mb-0">{{ offer.description }}</p>
+                        {% if offer.title == "Трейд-ин" %}
+                            <a href="{% url 'trade_in' %}" class="btn btn-primary btn-sm mt-3">Оценить авто</a>
+                        {% elif offer.title == "Кредит 1.9%" %}
+                            <a href="{% url 'credit' %}" class="btn btn-outline-warning btn-sm mt-3">Узнать условия</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -66,6 +76,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- О компании -->
 <section class="py-5">
