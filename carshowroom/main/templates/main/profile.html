@@ -1,184 +1,234 @@
 {% extends 'main/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Личный кабинет{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мой профиль</h4>
-                </div>
+        <!-- Боковая панель -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4">
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <i class="fas fa-user-circle fa-5x"></i>
+                        <i class="fas fa-user-circle fa-5x text-primary"></i>
                     </div>
-                    <h5>{{ user.get_full_name }}</h5>
-                    <p class="text-muted">{{ user.email }}</p>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Выйти</a>
+                    <h4 class="card-title">{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="text-muted mb-2">{{ user.email }}</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Выйти</a>
+                    </div>
                 </div>
             </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">Меню</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="#personal" class="text-decoration-none">Личные данные</a></li>
+                    <li class="list-group-item"><a href="#test-drives" class="text-decoration-none">Тест-драйвы</a></li>
+                    <li class="list-group-item"><a href="#orders" class="text-decoration-none">Мои заказы</a></li>
+                    <li class="list-group-item"><a href="#trade-in" class="text-decoration-none">Трейд-ин</a></li>
+                    <li class="list-group-item"><a href="#credit" class="text-decoration-none">Кредитные заявки</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-8">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>Личные данные</h4>
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <!-- Личные данные -->
+            <div class="card shadow-sm mb-4" id="personal">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Личные данные</h4>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ user_form.first_name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ user_form.last_name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ user_form.email|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ customer_form.phone|as_crispy_field }}
+                            </div>
+                            <div class="col-12">
+                                {{ customer_form.address|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
                     </form>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мои тест-драйвы</h4>
+            <!-- Тест-драйвы -->
+            <div class="card shadow-sm mb-4" id="test-drives">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Мои тест-драйвы</h4>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Записаться</a>
                 </div>
                 <div class="card-body">
                     {% if test_drives %}
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Автомобиль</th>
-                                        <th>Дата</th>
-                                        <th>Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for td in test_drives %}
-                                    <tr>
-                                        <td>{{ td.car.model }}</td>
-                                        <td>{{ td.date }}</td>
-                                        <td>
-                                            <span class="badge bg-{{ td.get_status_class }}">
-                                                {{ td.get_status_display }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Автомобиль</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for td in test_drives %}
+                                <tr>
+                                    <td>{{ td.car.model }}</td>
+                                    <td>{{ td.date|date:"d.m.Y H:i" }}</td>
+                                    <td><span class="badge bg-{{ td.get_status_class }}">{{ td.get_status_display }}</span></td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% else %}
-                        <p>У вас нет запланированных тест-драйвов</p>
+                    <div class="alert alert-info mb-0">
+                        У вас нет запланированных тест-драйвов
+                    </div>
                     {% endif %}
-                    <a href="#" class="btn btn-outline-primary">Записаться на тест-драйв</a>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мои заказы</h4>
+            <!-- Заказы -->
+            <div class="card shadow-sm mb-4" id="orders">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Мои заказы</h4>
                 </div>
                 <div class="card-body">
                     {% if orders %}
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Автомобиль</th>
-                                        <th>Дата заказа</th>
-                                        <th>Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for order in orders %}
-                                    <tr>
-                                        <td>{{ order.car.model }}</td>
-                                        <td>{{ order.order_date }}</td>
-                                        <td>
-                                            <span class="badge bg-{{ order.status|lower }} text-dark">
-                                                {{ order.get_status_display }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Автомобиль</th>
+                                    <th>Дата заказа</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.car.model }}</td>
+                                    <td>{{ order.order_date|date:"d.m.Y H:i" }}</td>
+                                    <td><span class="badge bg-{{ order.status|lower }}">{{ order.get_status_display }}</span></td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% else %}
-                        <p>У вас нет заказов</p>
+                    <div class="alert alert-info mb-0">
+                        У вас нет активных заказов
+                    </div>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мои заявки на трейд-ин</h4>
+            <!-- Трейд-ин -->
+            <div class="card shadow-sm mb-4" id="trade-in">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Мои заявки на трейд-ин</h4>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Новая заявка</a>
                 </div>
                 <div class="card-body">
                     {% if trade_in_requests %}
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Текущий автомобиль</th>
-                                        <th>Желаемая модель</th>
-                                        <th>Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for request in trade_in_requests %}
-                                    <tr>
-                                        <td>{{ request.current_car_brand }} {{ request.current_car_model }} ({{ request.year }}) - {{ request.mileage }} км</td>
-                                        <td>{{ request.desired_car }}</td>
-                                        <td>
-                                            <span class="badge" style="background-color: black; color: white;">
-                                                {{ request.get_status_display }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Текущий автомобиль</th>
+                                    <th>Желаемая модель</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for request in trade_in_requests %}
+                                <tr>
+                                    <td>{{ request.current_car_brand }} {{ request.current_car_model }} ({{ request.year }})</td>
+                                    <td>{{ request.desired_car }}</td>
+                                    <td><span class="badge bg-dark">{{ request.get_status_display }}</span></td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% else %}
-                        <p>У вас нет заявок на трейд-ин</p>
+                    <div class="alert alert-info mb-0">
+                        У вас нет активных заявок на трейд-ин
+                    </div>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мои заявки на кредит</h4>
+            <!-- Кредитные заявки -->
+            <div class="card shadow-sm" id="credit">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Мои кредитные заявки</h4>
+                    <a href="#" class="btn btn-sm btn-outline-primary">Новая заявка</a>
                 </div>
                 <div class="card-body">
                     {% if credit_requests %}
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Автомобиль</th>
-                                        <th>Сумма</th>
-                                        <th>Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for request in credit_requests %}
-                                    <tr>
-                                        <td>{{ request.car.model }}</td>
-                                        <td>{{ request.amount }} ₽</td>
-                                        <td>
-                                            <span class="badge" style="background-color: black; color: white;">
-                                                {{ request.get_status_display }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Автомобиль</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for request in credit_requests %}
+                                <tr>
+                                    <td>{{ request.car.model }}</td>
+                                    <td>{{ request.amount }} ₽</td>
+                                    <td><span class="badge bg-dark">{{ request.get_status_display }}</span></td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                     {% else %}
-                        <p>У вас нет заявок на кредит</p>
+                    <div class="alert alert-info mb-0">
+                        У вас нет активных кредитных заявок
+                    </div>
                     {% endif %}
                 </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -1,7 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import CarOrder, TradeInRequest, CreditRequest, SaleContract, CarConfiguration, SalesEmployee
+from .models import CarOrder, TradeInRequest, CreditRequest, SaleContract, CarConfiguration, SalesEmployee, Customer
+
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['phone', 'address']
+        widgets = {
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
 
 
 class ProfileForm(forms.ModelForm):
@@ -18,20 +28,22 @@ class ProfileForm(forms.ModelForm):
 class SalesEmployeeForm(forms.ModelForm):
     class Meta:
         model = SalesEmployee
-        fields = ['department']
+        fields = ['position', 'hire_date']
+        widgets = {
+            'position': forms.TextInput(attrs={'class': 'form-control'}),
+            'hire_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
 
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,10 +51,13 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
 
 
-class CarOrderForm(forms.ModelForm):
+class CarOrderStatusForm(forms.ModelForm):
     class Meta:
         model = CarOrder
-        fields = ['car', 'status', 'comment', 'phone']
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(choices=CarOrder.STATUS_CHOICES),
+        }
 
 
 class TradeInForm(forms.ModelForm):

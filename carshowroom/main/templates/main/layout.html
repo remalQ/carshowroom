@@ -47,6 +47,13 @@
                                 <span class="nav-text">Профиль сотрудника</span>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link">
+                                <i class="fas fa-sign-out-alt nav-icon"></i>
+                                <span class="nav-text">Выйти</span>
+                            </a>
+                        </li>
                     {% elif user.is_authenticated and not user|has_salesemployee %}
                         <li class="nav-item">
                             <a href="{% url 'profile' %}" class="nav-link">
@@ -54,13 +61,15 @@
                                 <span class="nav-text">Профиль</span>
                             </a>
                         </li>
-                    {% endif %}
+
                         <li class="nav-item">
                             <a href="{% url 'logout' %}" class="nav-link">
                                 <i class="fas fa-sign-out-alt nav-icon"></i>
                                 <span class="nav-text">Выйти</span>
                             </a>
                         </li>
+
+                    {% endif %}
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a href="{% url 'login' %}" class="nav-link">

@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.core.exceptions import PermissionDenied
-from .forms import ProfileForm, RegisterForm, CarOrderForm, TradeInForm, CreditRequestForm, \
-    UsedCarSaleForm, CarConfigurationForm, SalesEmployeeForm
-from .models import TestDrive, Car, SaleContract, SalesEmployee, CarOrder, CreditRequest, TradeInRequest
+from .forms import ProfileForm, RegisterForm, TradeInForm, CreditRequestForm, \
+    UsedCarSaleForm, CarConfigurationForm, SalesEmployeeForm, CustomerForm, CarOrderStatusForm
+from .models import TestDrive, Car, SaleContract, SalesEmployee, CarOrder, CreditRequest, TradeInRequest, \
+    Customer, Application
 from django.contrib import messages
 
 
@@ -53,8 +54,15 @@ def register(request):
             user = form.save()
             from django.contrib.auth import login
             login(request, user)
+
+            # Создаем профиль Customer для нового пользователя
+            Customer.objects.create(
+                user=user,
+                phone=form.cleaned_data.get('phone', '')  # если добавили phone в RegisterForm
+            )
+
             if SalesEmployee.objects.filter(user=user).exists():
-                return redirect('sales_employee_profile')
+                return redirect('sales_profile')
             else:
                 return redirect('profile')
     else:
@@ -63,41 +71,93 @@ def register(request):
 
 
 @login_required
-def profile(request):
+def sales_employee_profile(request):
     try:
-        # Пытаемся найти сотрудника по текущему пользователю
-        employee = SalesEmployee.objects.get(user=request.user)
+        employee = request.user.employee
+
+        # Получаем все заявки (например, CarOrder)
+        orders = CarOrder.objects.all()
 
         if request.method == 'POST':
-            form = SalesEmployeeForm(request.POST, instance=employee)
-            if form.is_valid():
-                form.save()
+            user_form = ProfileForm(request.POST, instance=request.user)
+            employee_form = SalesEmployeeForm(request.POST, instance=employee)
+
+            # Если форма статуса заявки отправлена, обновляем статус заявки
+            if 'status_form' in request.POST:
+                status_form = CarOrderStatusForm(request.POST)
+                if status_form.is_valid():
+                    status_form.save()
+                    messages.success(request, 'Статус заявки обновлен.')
+                    return redirect('sales_profile')
+            else:
+                status_form = CarOrderStatusForm()
+
+            if user_form.is_valid() and employee_form.is_valid():
+                user_form.save()
+                employee_form.save()
                 messages.success(request, 'Профиль сотрудника успешно обновлен.')
-                return redirect('profile')
+                return redirect('sales_profile')
         else:
-            form = SalesEmployeeForm(instance=employee)
+            user_form = ProfileForm(instance=request.user)
+            employee_form = SalesEmployeeForm(instance=employee)
+            status_form = CarOrderStatusForm()
 
         context = {
-            'form': form,
+            'user_form': user_form,
+            'employee_form': employee_form,
             'employee': employee,
+            'orders': orders,  # Передаем все заявки
+            'status_form': status_form,  # Форма для изменения статуса
         }
         return render(request, 'main/sales_profile.html', context)
 
     except SalesEmployee.DoesNotExist:
-        # Если это не сотрудник — показать обычный профиль
-        orders = CarOrder.objects.filter(user=request.user)
-        test_drives = TestDrive.objects.filter(user=request.user)
-        trade_in_requests = TradeInRequest.objects.filter(user=request.user)
-        credit_requests = CreditRequest.objects.filter(user=request.user)
+        return redirect('profile')
 
-        context = {
-            'user': request.user,
-            'orders': orders,
-            'test_drives': test_drives,
-            'trade_in_requests': trade_in_requests,
-            'credit_requests': credit_requests,
-        }
-        return render(request, 'main/profile.html', context)
+
+@login_required
+def redirect_user(request):
+    if hasattr(request.user, 'employee'):  # Проверяем, является ли пользователь сотрудником
+        return redirect('sales_employee_profile')
+    else:
+        return redirect('profile')
+
+
+@login_required
+def profile(request):
+    try:
+        customer = request.user.customer
+    except AttributeError:
+        customer = Customer.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        user_form = ProfileForm(request.POST, instance=request.user)
+        customer_form = CustomerForm(request.POST, instance=customer)
+
+        if user_form.is_valid() and customer_form.is_valid():
+            user_form.save()
+            customer_form.save()
+            messages.success(request, 'Профиль успешно обновлен.')
+            return redirect('profile')
+    else:
+        user_form = ProfileForm(instance=request.user)
+        customer_form = CustomerForm(instance=customer)
+
+    orders = CarOrder.objects.filter(user=request.user)
+    test_drives = TestDrive.objects.filter(user=request.user)
+    trade_in_requests = TradeInRequest.objects.filter(user=request.user)
+    credit_requests = CreditRequest.objects.filter(user=request.user)
+
+    context = {
+        'user_form': user_form,
+        'customer_form': customer_form,
+        'customer': customer,
+        'orders': orders,
+        'test_drives': test_drives,
+        'trade_in_requests': trade_in_requests,
+        'credit_requests': credit_requests,
+    }
+    return render(request, 'main/profile.html', context)
 
 
 def car_order_view(request):

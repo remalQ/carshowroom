@@ -1,33 +1,117 @@
 {% extends 'main/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Профиль сотрудника{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Мой профиль</h4>
-                </div>
-                <div class="card-body">
-                    <p><strong>Имя:</strong> {{ employee.user.get_full_name }}</p>
-                    <p><strong>Отдел:</strong> {{ employee.department }}</p>
-                    <p><strong>Дата приема на работу:</strong> {{ employee.hired_on }}</p>
+        <!-- Боковая панель -->
+        <div class="col-md-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-user-tie fa-5x text-primary"></i>
+                    </div>
+                    <h4 class="card-title">{{ employee.user.get_full_name }}</h4>
+                    <p class="text-muted mb-2">{{ employee.position }}</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Выйти</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Меню -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">Меню</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="#profile" class="text-decoration-none">Профиль</a></li>
+                    <li class="list-group-item"><a href="{% url 'sales_dashboard' %}" class="text-decoration-none">Панель управления</a></li>
+                    <li class="list-group-item"><a href="#" class="text-decoration-none">Продажи</a></li>
+                    <li class="list-group-item"><a href="#" class="text-decoration-none">Клиенты</a></li>
+                    <li class="list-group-item"><a href="#" class="text-decoration-none">Отчеты</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Редактировать профиль</h4>
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Редактирование профиля</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <div class="row g-3">
+                            <!-- Личные данные -->
+                            <div class="col-12">
+                                <h5 class="mb-3">Личные данные</h5>
+                            </div>
+                            <div class="col-md-6">
+                                {{ user_form.first_name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ user_form.last_name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ user_form.email|as_crispy_field }}
+                            </div>
+
+                            <!-- Служебная информация -->
+                            <div class="col-12 mt-4">
+                                <h5 class="mb-3">Служебная информация</h5>
+                            </div>
+                            <div class="col-md-6">
+                                {{ employee_form.position|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ employee_form.hire_date|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
                     </form>
+                </div>
+            </div>
+
+            <!-- Заявки -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Заявки</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Клиент</th>
+                                <th>Модель автомобиля</th>
+                                <th>Дата заказа</th>
+                                <th>Статус</th>
+                                <th>Изменить статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ order.user.username }}</td>
+                                <td>{{ order.car_model }}</td>
+                                <td>{{ order.order_date }}</td>
+                                <td>{{ order.get_status_display }}</td>
+                                <td>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        {{ status_form.as_p }}
+                                        <button type="submit" class="btn btn-sm btn-primary">Изменить статус</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

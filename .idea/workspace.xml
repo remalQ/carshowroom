@@ -4,29 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78f3a609-f353-40ab-9dd1-e15cd4802939" name="Changes" comment="Need to fix logout, car models in home page, create a buying system">
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/credit_info.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/credit_thanks.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/new_car_sale.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sale_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/used_car_sale.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/custom_filters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/employee_tags.py" afterDir="false" />
+    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/CarShowroom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CarShowroom.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/tradein_requests.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/views.py" afterDir="false" />
     </list>
@@ -35,23 +26,18 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2wG03NQ6tsfWbAMnBY1uyqDdWKE" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2wInQlhXa0fUyg1UNaShcQWt1Oi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,17 +46,9 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/lilma/PycharmProjects/CarShowroom/carshowroom/main/static/main/img&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\lilma\PycharmProjects\CarShowroom\carshowroom\main\static\main\img" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lilma\PycharmProjects\CarShowroom\carshowroom\main\static\main\img" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -81,34 +59,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="78f3a609-f353-40ab-9dd1-e15cd4802939" name="Changes" comment="" />
-      <created>1745652402878</created>
+      <changelist id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="" />
+      <created>1745737942549</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1745652402878</updated>
+      <updated>1745737942549</updated>
     </task>
-    <task id="LOCAL-00001" summary="Create django-project">
-      <option name="closed" value="true" />
-      <created>1745652702717</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1745652702717</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Need to fix logout, car models in home page, create a buying system">
-      <option name="closed" value="true" />
-      <created>1745680089861</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1745680089861</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Create django-project" />
-    <MESSAGE value="Need to fix logout, car models in home page, create a buying system" />
-    <option name="LAST_COMMIT_MESSAGE" value="Need to fix logout, car models in home page, create a buying system" />
   </component>
 </project>
