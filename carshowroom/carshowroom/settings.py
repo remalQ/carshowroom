@@ -58,7 +58,7 @@ ROOT_URLCONF = 'carshowroom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +69,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'carshowroom.wsgi.application'
 
@@ -129,8 +130,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "main/static",
 ]
 
-AUTH_USER_MODEL = 'auth.User'
-LOGIN_REDIRECT_URL = '/profile/'
+AUTH_USER_MODEL = 'main.CustomUser'
+LOGIN_REDIRECT_URL = '/redirect/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
@@ -140,3 +141,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

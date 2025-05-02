@@ -1,0 +1,34 @@
+{% extends 'main/layout.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block title %}Регистрация сотрудника{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-warning text-dark">
+                    <h4 class="mb-0">Регистрация сотрудника</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">
+                        Вы клиент? <a href="{% url 'register_client' %}">Зарегистрироваться как клиент</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
