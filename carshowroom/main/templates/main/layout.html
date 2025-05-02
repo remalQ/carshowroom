@@ -45,10 +45,10 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                    {% if user|has_salesemployee %}
+                    {% if user|is_employee %}
                         <!-- Сотрудник -->
                         <li class="nav-item">
-                            <a href="{% url 'sales_profile' %}" class="nav-link {% if request.resolver_match.url_name == 'sales_profile' %}active{% endif %}">
+                            <a href="{% url 'sales_employee' %}" class="nav-link {% if request.resolver_match.url_name == 'sales_profile' %}active{% endif %}">
                                 <i class="fas fa-user-tie nav-icon"></i>
                                 <span class="nav-text">Профиль сотрудника</span>
                             </a>

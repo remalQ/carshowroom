@@ -15,7 +15,7 @@ class EmployeeRegistrationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'password1', 'password2',
+        fields = ['username', 'first_name', 'last_name', 'password1', 'password2',
                   'position', 'department', 'hire_date']
 
     def save(self, commit=True):
@@ -39,7 +39,7 @@ class ClientSignUpForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'password']
+        fields = ['username', 'first_name', 'last_name', 'password']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -77,6 +77,18 @@ class CarOrderStatusForm(forms.ModelForm):
         widgets = {
             'status': forms.Select(choices=CarOrder.STATUS_CHOICES),
         }
+
+
+class CustomUserRegistrationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username',)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+        return user
 
 
 class CarOrderForm(forms.ModelForm):

@@ -6,6 +6,24 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.admin import SimpleListFilter
 
 
+STATUS_CHOICES = (
+    ('new', 'Новая'),
+    ('in_progress', 'В обработке'),
+    ('completed', 'Завершена'),
+    ('rejected', 'Отклонена'),
+)
+
+class Application(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.get_status_display()})"
+
+
 class ClientStatusFilter(SimpleListFilter):
     title = 'Клиент'
     parameter_name = 'is_client'
@@ -92,27 +110,6 @@ class Car(models.Model):
         ]
 
 
-class Application(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Ожидает обработки'),
-        ('in_progress', 'В процессе'),
-        ('completed', 'Завершена'),
-        ('rejected', 'Отклонена'),
-    ]
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255, verbose_name='Название заявки')
-    description = models.TextField(blank=True, null=True, verbose_name='Описание заявки')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='Статус заявки')
-
-    def __str__(self):
-        return f"Заявка {self.title} от {self.user.username} ({self.status})"
-
-    class Meta:
-        verbose_name = 'Заявка'
-        verbose_name_plural = 'Заявки'
-
-
 class TestDrive(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Ожидает подтверждения'),
@@ -196,23 +193,16 @@ class CarConfiguration(models.Model):
 
 
 class CustomUser(AbstractUser):
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.username
-
-    @property
-    def is_client(self):
-        return hasattr(self, 'client')
-
-    @property
     def is_employee(self):
-        return hasattr(self, 'employee')
+        return self.groups.filter(name="Сотрудники").exists()
+
+    def is_client(self):
+        return not self.is_employee()
 
 
 # Модель клиента
 class Client(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Связь с CustomUser
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client')
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)

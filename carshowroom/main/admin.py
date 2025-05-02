@@ -1,36 +1,25 @@
 from django.contrib import admin
-from .models import Car
-from .models import Application
-from .models import CustomUser, ClientStatusFilter, EmployeeStatusFilter
-from .models import Client, Employee, Customer
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser, Car, Application
+from django.contrib.auth.models import Group
 
 
-class CustomerInline(admin.StackedInline):
-    model = Customer
-    can_delete = False
-    extra = 0
-
-
-class ClientInline(admin.StackedInline):
-    model = Client
-    can_delete = False
-    extra = 0
-
-
-class EmployeeInline(admin.StackedInline):
-    model = Employee
-    can_delete = False
-    extra = 0
-
-
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'is_staff', 'is_superuser', 'is_client', 'is_employee')
-    search_fields = ('email',)
-    list_filter = ('is_staff', 'is_superuser', ClientStatusFilter, EmployeeStatusFilter)
-    inlines = [CustomerInline, ClientInline, EmployeeInline]
-
-
-admin.site.register(CustomUser, CustomUserAdmin)
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    list_display = ('username', 'is_staff', 'is_superuser')
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'fields': ('username', 'password1', 'password2'),
+        }),
+    )
+    search_fields = ('username',)
+    ordering = ('username',)
 
 
 class CarAdmin(admin.ModelAdmin):

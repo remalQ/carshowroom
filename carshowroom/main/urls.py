@@ -18,11 +18,12 @@ urlpatterns = [
     path('sale_success/', views.sale_success, name='sale_success'),
     path('register/client/', views.register_client, name='register_client'),
     path('register/employee/', views.register_employee, name='register_employee'),
-    path('profile/', views.profile, name='profile'),
-    path('sales_employee/', views.sales_employee, name='sales_profile'),
+    path('profile/', views.profile_view, name='profile'),
+    path('sales_employee/', views.sales_employee, name='sales_employee'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('application/<int:application_id>/change_status/', views.change_application_status, name='change_application_status'),
 
 ]

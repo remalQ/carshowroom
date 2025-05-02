@@ -5,30 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Need to fix the link to the employee’s profile">
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/management/commands/create_default_car.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/register_client.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/register_employee.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0002_car_slug_carorder_tradeinrequest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0003_alter_car_slug.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0004_creditrequest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0005_carconfiguration_salecontract_usedcar.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0006_salesemployee_salecontract_sales_employee.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0007_rename_created_at_carorder_order_date_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0008_customer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0009_remove_salesemployee_department_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0010_alter_car_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0011_remove_carorder_car_remove_carorder_comment_and_more.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/register.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templatetags/employee_tags.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/employee_tags.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
@@ -93,7 +77,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745944650987</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Need to fix the link to the employee’s profile">
+      <option name="closed" value="true" />
+      <created>1746173844998</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746173844998</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
+from django.contrib.auth.models import Group
 from .forms import TradeInForm, CreditRequestForm, CarOrderForm, EmployeeRegistrationForm, \
-    ClientSignUpForm, UserForm, CustomerForm
-from .models import TestDrive, Car, Employee
+    ClientSignUpForm, UserForm, CustomerForm, CustomUserRegistrationForm
+from .models import TestDrive, Car, Employee, Client, Application
 from django.contrib import messages
 
 
@@ -47,60 +48,88 @@ def contact(request):
 
 def register_employee(request):
     if request.method == 'POST':
-        form = EmployeeRegistrationForm(request.POST)
+        form = CustomUserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Сотрудник успешно зарегистрирован.')
-            return redirect('login')  # Перенаправляем на страницу входа после регистрации сотрудника
+            user = form.save()
+            employee_group, created = Group.objects.get_or_create(name='Сотрудники')
+            user.groups.add(employee_group)
+            return redirect('login')
     else:
-        form = EmployeeRegistrationForm()
+        form = CustomUserRegistrationForm()
     return render(request, 'main/register_employee.html', {'form': form})
 
 
 @login_required
 def redirect_view(request):
-    if hasattr(request.user, 'salesemployee'):
-        return redirect('sales_profile')
+    if is_employee(request.user):
+        return redirect('sales_employee')
     else:
         return redirect('profile')
 
 
 def register_client(request):
     if request.method == 'POST':
-        form = ClientSignUpForm(request.POST)
+        form = CustomUserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Клиент успешно зарегистрирован.')
-            return redirect('login')  # Перенаправляем на страницу входа после регистрации клиента
+            user = form.save()
+            return redirect('login')
     else:
-        form = ClientSignUpForm()
+        form = CustomUserRegistrationForm()
     return render(request, 'main/register_client.html', {'form': form})
 
 
+def is_employee(user):
+    return user.groups.filter(name='Менеджеры').exists()
+
+
 @login_required
-def profile(request):
-    user_form = UserForm(instance=request.user)
-    customer_form = CustomerForm(instance=request.user.customer)
+@user_passes_test(is_employee)
+def change_application_status(request, application_id):
+    application = get_object_or_404(Application, id=application_id)
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        customer_form = CustomerForm(request.POST, instance=request.user.customer)
-        if user_form.is_valid() and customer_form.is_valid():
-            user_form.save()
-            customer_form.save()
-            # Показать сообщение об успешном сохранении или перенаправить
-            return redirect('profile')  # или на другой URL
+        new_status = request.POST.get('status')
+        if new_status in dict(Application.STATUS_CHOICES):
+            application.status = new_status
+            application.save()
+            return redirect('sales_profile')  # Имя твоего профиля сотрудника
 
-    context = {
-        'user_form': user_form,
-        'customer_form': customer_form
-    }
+    return render(request, 'main/change_status.html', {
+        'application': application,
+        'status_choices': Application.STATUS_CHOICES,
+    })
 
-    return render(request, 'main/profile.html', context)
+
+@login_required
+def change_status(request, application_id):
+    if not request.user.is_employee():
+        return redirect('profile')
+
+    app = get_object_or_404(Application, pk=application_id)
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        app.status = new_status
+        app.save()
+        return redirect('profile')
+    return render(request, 'main/change_status.html', {'app': app})
+
+
+@login_required
+def profile_view(request):
+    user = request.user
+    if user.is_employee():
+        # Сотрудник видит все заявки
+        applications = Application.objects.all()
+        return render(request, 'main/sales_profile.html', {'applications': applications})
+    else:
+        # Клиент видит только свои заявки
+        applications = Application.objects.filter(user=user)
+        return render(request, 'main/profile.html', {'applications': applications})
 
 
 # Представление для профиля сотрудника
 @login_required
+@user_passes_test(is_employee)
 def sales_employee(request):
     try:
         # Пытаемся получить сотрудника по текущему пользователю
@@ -108,8 +137,7 @@ def sales_employee(request):
     except Employee.DoesNotExist:
         employee = None  # Если сотрудник не найден
 
-    # Возвращаем профиль сотрудника (или пустую информацию, если сотрудник не существует)
-    return render(request, 'sales_employee_profile.html', {'employee': employee})
+    return render(request, 'main/sales_profile.html', {'employee': employee})
 
 
 def car_order_view(request):
