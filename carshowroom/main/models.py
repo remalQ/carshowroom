@@ -13,16 +13,6 @@ STATUS_CHOICES = (
     ('rejected', 'Отклонена'),
 )
 
-class Application(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.title} ({self.get_status_display()})"
-
 
 class ClientStatusFilter(SimpleListFilter):
     title = 'Клиент'
@@ -110,7 +100,7 @@ class Car(models.Model):
         ]
 
 
-class TestDrive(models.Model):
+class TestDriveRequest(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Ожидает подтверждения'),
         ('confirmed', 'Подтвержден'),
@@ -122,6 +112,7 @@ class TestDrive(models.Model):
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
     date = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def get_status_class(self):
         return {
@@ -130,6 +121,12 @@ class TestDrive(models.Model):
             'completed': 'info',
             'canceled': 'danger',
         }.get(self.status, 'secondary')
+
+    def __str__(self):
+        return f"Test Drive: {self.car} ({self.get_status_display()})"
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class CarOrder(models.Model):
@@ -141,16 +138,24 @@ class CarOrder(models.Model):
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    car_model = models.ForeignKey(Car, on_delete=models.CASCADE)
-    order_date = models.DateField(auto_now_add=True)
+    car = models.ForeignKey('Car', on_delete=models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
 
     def __str__(self):
-        return f"Заказ {self.car_model} от {self.user.username} - {self.get_status_display()}"
+        return f"Заказ {self.car} — {self.get_status_display()}"
+
+    class Meta:
+        ordering = ['-order_date']
 
 
 # Модель для заявки на трейд-ин (TradeInRequest)
 class TradeInRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'В обработке'),
+        ('contacted', 'Связались'),
+    ]
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     current_car_brand = models.CharField(max_length=255)
     current_car_model = models.CharField(max_length=255)
@@ -161,23 +166,38 @@ class TradeInRequest(models.Model):
     email = models.EmailField()
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=[('pending', 'В обработке'), ('contacted', 'Связались')], default='pending')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
-        return f"Трейд-ин {self.current_car_brand} {self.current_car_model}"
+        return f"Trade-In: {self.current_car_brand} {self.current_car_model} ({self.get_status_display()})"
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 # Модель для заявки на кредит (CreditRequest)
 class CreditRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'В обработке'),
+        ('approved', 'Одобрено'),
+        ('rejected', 'Отклонено'),
+    ]
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey('Car', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
-    amount = models.DecimalField(max_digits=12, decimal_places=2)  # Сумма кредита
-    duration = models.PositiveIntegerField()  # Срок кредита в месяцах
-    status = models.CharField(max_length=50, choices=[('pending', 'В обработке'), ('approved', 'Одобрено'), ('rejected', 'Отклонено')], default='pending')
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    duration = models.PositiveIntegerField()
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Кредит: {self.car} — {self.amount}₽ на {self.duration} мес. ({self.get_status_display()})"
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class CarConfiguration(models.Model):
@@ -239,3 +259,25 @@ class SaleContract(models.Model):
 
     def __str__(self):
         return f"Договор продажи {self.car.model} - {self.user.username}"
+
+
+class Application(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'Новая'),
+        ('in_progress', 'В процессе'),
+        ('completed', 'Завершена'),
+        ('rejected', 'Отклонена'),
+    ]
+
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=255, null=False, default='Нет описания')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='new',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

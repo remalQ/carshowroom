@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Car, Application
-from django.contrib.auth.models import Group
+from .models import CustomUser, Car, Application, CarOrder, TestDriveRequest, TradeInRequest, CreditRequest
 
 
 @admin.register(CustomUser)
@@ -37,3 +36,8 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Application, ApplicationAdmin)
+
+admin.site.register(CarOrder)
+admin.site.register(TestDriveRequest)
+admin.site.register(CreditRequest)
+admin.site.register(TradeInRequest)

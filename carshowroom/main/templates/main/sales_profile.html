@@ -1,47 +1,215 @@
 {% extends 'main/layout.html' %}
+
 {% block title %}Профиль сотрудника{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Профиль сотрудника</h2>
+<h2>Профиль сотрудника</h2>
 
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead class="table-dark">
+{% if employee %}
+    <p><strong>Имя:</strong> {{ employee.user.first_name }} {{ employee.user.last_name }}</p>
+    <p><strong>Должность:</strong> {{ employee.position }}</p>
+{% else %}
+    <p>Данные сотрудника не найдены.</p>
+{% endif %}
+
+<hr>
+
+<h3>Заявки на Trade-In</h3>
+{% if tradein_page_obj %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Модель автомобиля</th>
+                <th>Статус</th>
+                <th>Изменить статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in tradein_page_obj %}
                 <tr>
-                    <th>Покупатель</th>
-                    <th>Заявка</th>
-                    <th>Статус</th>
-                    <th>Действие</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for app in applications %}
-                <tr>
-                    <td>{{ app.user.username }}</td>
-                    <td>{{ app.title }}</td>
+                    <td>{{ r.created_at }}</td>
+                    <td>{{ r.current_car_brand }} {{ r.current_car_model }}</td>
+                    <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
                     <td>
-                        <span class="badge 
-                            {% if app.status == 'Новая' %}bg-primary
-                            {% elif app.status == 'В работе' %}bg-warning text-dark
-                            {% elif app.status == 'Завершена' %}bg-success
-                            {% else %}bg-secondary{% endif %}">
-                            {{ app.status }}
-                        </span>
+                        <a href="{% url 'change_application_status' r.id %}" class="btn btn-warning">Изменить статус</a>
                     </td>
-                    <td>
-                        <a href="{% url 'change_status' app.id %}" class="btn btn-sm btn-outline-primary">
-                            Изменить статус
-                        </a>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center text-muted">Заявки отсутствуют</td>
                 </tr>
             {% endfor %}
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if tradein_page_obj.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ tradein_page_obj.previous_page_number }}">предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ tradein_page_obj.number }} из {{ tradein_page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if tradein_page_obj.has_next %}
+                <a href="?page={{ tradein_page_obj.next_page_number }}">следующая</a>
+                <a href="?page={{ tradein_page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
     </div>
-</div>
+
+{% else %}
+    <p>Нет заявок на Trade-In</p>
+{% endif %}
+
+<hr>
+
+<h3>Заявки на Test Drive</h3>
+{% if testdrive_page_obj %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Модель автомобиля</th>
+                <th>Статус</th>
+                <th>Изменить статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in testdrive_page_obj %}
+                <tr>
+                    <td>{{ r.date }}</td>
+                    <td>{{ r.car }}</td>
+                    <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'change_application_status' r.id %}" class="btn btn-warning">Изменить статус</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if testdrive_page_obj.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ testdrive_page_obj.previous_page_number }}">предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ testdrive_page_obj.number }} из {{ testdrive_page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if testdrive_page_obj.has_next %}
+                <a href="?page={{ testdrive_page_obj.next_page_number }}">следующая</a>
+                <a href="?page={{ testdrive_page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% else %}
+    <p>Нет заявок на Test Drive</p>
+{% endif %}
+
+<hr>
+
+<h3>Заявки на Покупку</h3>
+{% if purchase_page_obj %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Модель автомобиля</th>
+                <th>Статус</th>
+                <th>Изменить статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in purchase_page_obj %}
+                <tr>
+                    <td>{{ r.order_date }}</td>
+                    <td>{{ r.car_model }}</td>
+                    <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'change_application_status' r.id %}" class="btn btn-warning">Изменить статус</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if purchase_page_obj.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ purchase_page_obj.previous_page_number }}">предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ purchase_page_obj.number }} из {{ purchase_page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if purchase_page_obj.has_next %}
+                <a href="?page={{ purchase_page_obj.next_page_number }}">следующая</a>
+                <a href="?page={{ purchase_page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% else %}
+    <p>Нет заявок на Покупку</p>
+{% endif %}
+
+<hr>
+
+<h3>Заявки на Кредит</h3>
+{% if credit_page_obj %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Сумма кредита</th>
+                <th>Статус</th>
+                <th>Изменить статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in credit_page_obj %}
+                <tr>
+                    <td>{{ r.created_at }}</td>
+                    <td>{{ r.amount }}</td>
+                    <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
+                    <td>
+                        <a href="{% url 'change_application_status' r.id %}" class="btn btn-warning">Изменить статус</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if credit_page_obj.has_previous %}
+                <a href="?page=1">&laquo; первая</a>
+                <a href="?page={{ credit_page_obj.previous_page_number }}">предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ credit_page_obj.number }} из {{ credit_page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if credit_page_obj.has_next %}
+                <a href="?page={{ credit_page_obj.next_page_number }}">следующая</a>
+                <a href="?page={{ credit_page_obj.paginator.num_pages }}">последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% else %}
+    <p>Нет заявок на Кредит</p>
+{% endif %}
+
 {% endblock %}

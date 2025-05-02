@@ -1,15 +1,16 @@
+<!-- change_status.html -->
 {% extends 'main/layout.html' %}
+
+{% block title %}Изменить статус заявки{% endblock %}
+
 {% block content %}
-<h2>Изменение статуса заявки "{{ application.title }}"</h2>
+<h2>Изменить статус заявки</h2>
+
 <form method="post">
     {% csrf_token %}
-    <label for="status">Новый статус:</label>
-    <select name="status" id="status">
-        {% for key, value in status_choices %}
-            <option value="{{ key }}" {% if application.status == key %}selected{% endif %}>{{ value }}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
+    {{ form.as_p }}
+    <button type="submit">Сохранить изменения</button>
 </form>
-<a href="{% url 'sales_employee_profile' %}">Назад</a>
+
+<a href="{% url 'sales_employee' %}">Назад</a>
 {% endblock %}

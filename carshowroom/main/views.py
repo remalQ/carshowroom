@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
+from django.core.paginator import Paginator
 from django.contrib.auth.models import Group
-from .forms import TradeInForm, CreditRequestForm, CarOrderForm, EmployeeRegistrationForm, \
-    ClientSignUpForm, UserForm, CustomerForm, CustomUserRegistrationForm
-from .models import TestDrive, Car, Employee, Client, Application
+from .forms import TradeInForm, CreditRequestForm, CarOrderForm, CustomUserRegistrationForm, UserProfileForm, \
+    ApplicationStatusForm
+from .models import TestDriveRequest, Car, Employee, Client, Application, TradeInRequest, CreditRequest, CarOrder
 from django.contrib import messages
 
 
@@ -83,20 +84,21 @@ def is_employee(user):
 
 
 @login_required
-@user_passes_test(is_employee)
+@user_passes_test(is_employee)  # Убедитесь, что это условие правильно обрабатывает сотрудников
 def change_application_status(request, application_id):
-    application = get_object_or_404(Application, id=application_id)
+    application = get_object_or_404(Application, pk=application_id)
 
-    if request.method == 'POST':
-        new_status = request.POST.get('status')
-        if new_status in dict(Application.STATUS_CHOICES):
-            application.status = new_status
-            application.save()
-            return redirect('sales_profile')  # Имя твоего профиля сотрудника
+    if request.method == "POST":
+        form = ApplicationStatusForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()
+            return redirect('application_detail', application_id=application.id)  # Перенаправление после сохранения
+    else:
+        form = ApplicationStatusForm(instance=application)
 
     return render(request, 'main/change_status.html', {
-        'application': application,
-        'status_choices': Application.STATUS_CHOICES,
+        'form': form,
+        'application': application
     })
 
 
@@ -116,15 +118,51 @@ def change_status(request, application_id):
 
 @login_required
 def profile_view(request):
-    user = request.user
-    if user.is_employee():
-        # Сотрудник видит все заявки
-        applications = Application.objects.all()
-        return render(request, 'main/sales_profile.html', {'applications': applications})
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Перенаправляем на профиль после сохранения изменений
     else:
-        # Клиент видит только свои заявки
-        applications = Application.objects.filter(user=user)
-        return render(request, 'main/profile.html', {'applications': applications})
+        form = UserProfileForm(instance=request.user)
+
+    # Пагинация для заявок
+    tradein_requests = TradeInRequest.objects.filter(user=request.user)
+    paginator = Paginator(tradein_requests, 5)  # Показывать по 5 заявок на страницу
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    testdrive_requests = TestDriveRequest.objects.filter(user=request.user)
+    testdrive_paginator = Paginator(testdrive_requests, 5)
+    testdrive_page_obj = testdrive_paginator.get_page(page_number)
+
+    purchase_requests = CarOrder.objects.filter(user=request.user)
+    purchase_paginator = Paginator(purchase_requests, 5)
+    purchase_page_obj = purchase_paginator.get_page(page_number)
+
+    credit_requests = CreditRequest.objects.filter(user=request.user)
+    credit_paginator = Paginator(credit_requests, 5)
+    credit_page_obj = credit_paginator.get_page(page_number)
+
+    return render(request, 'main/profile.html', {
+        'form': form,
+        'page_obj': page_obj,
+        'testdrive_page_obj': testdrive_page_obj,
+        'purchase_page_obj': purchase_page_obj,
+        'credit_page_obj': credit_page_obj,
+    })
+
+
+@login_required
+def user_requests_view(request):
+    user = request.user
+    context = {
+        'test_drives': TestDriveRequest.objects.filter(user=user),
+        'car_orders': CarOrder.objects.filter(user=user),
+        'trade_ins': TradeInRequest.objects.filter(user=user),
+        'credit_requests': CreditRequest.objects.filter(user=user),
+    }
+    return render(request, 'user_requests.html', context)
 
 
 # Представление для профиля сотрудника
@@ -137,9 +175,34 @@ def sales_employee(request):
     except Employee.DoesNotExist:
         employee = None  # Если сотрудник не найден
 
-    return render(request, 'main/sales_profile.html', {'employee': employee})
+    # Пагинация для всех заявок
+    tradein_requests = TradeInRequest.objects.all()  # Показываем заявки всех пользователей
+    paginator = Paginator(tradein_requests, 5)  # Показывать по 5 заявок на страницу
+    page_number = request.GET.get('page')
+    tradein_page_obj = paginator.get_page(page_number)
+
+    testdrive_requests = TestDriveRequest.objects.all()
+    testdrive_paginator = Paginator(testdrive_requests, 5)
+    testdrive_page_obj = testdrive_paginator.get_page(page_number)
+
+    purchase_requests = CarOrder.objects.all()
+    purchase_paginator = Paginator(purchase_requests, 5)
+    purchase_page_obj = purchase_paginator.get_page(page_number)
+
+    credit_requests = CreditRequest.objects.all()
+    credit_paginator = Paginator(credit_requests, 5)
+    credit_page_obj = credit_paginator.get_page(page_number)
+
+    return render(request, 'main/sales_profile.html', {
+        'employee': employee,
+        'tradein_page_obj': tradein_page_obj,
+        'testdrive_page_obj': testdrive_page_obj,
+        'purchase_page_obj': purchase_page_obj,
+        'credit_page_obj': credit_page_obj,
+    })
 
 
+@login_required
 def car_order_view(request):
     if request.method == 'POST':
         form = CarOrderForm(request.POST)

@@ -1,7 +1,27 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CarOrder, CustomUser, TradeInRequest, CreditRequest, SaleContract, CarConfiguration, \
-    Employee, Client, Customer
+    Employee, Client, Customer, Application
+
+
+class ApplicationStatusForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(choices=Application.STATUS_CHOICES),
+        }
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
 
 
 class EmployeeRegistrationForm(UserCreationForm):
@@ -94,9 +114,9 @@ class CustomUserRegistrationForm(UserCreationForm):
 class CarOrderForm(forms.ModelForm):
     class Meta:
         model = CarOrder
-        fields = ['car_model']
+        fields = ['car']
         widgets = {
-            'car_model': forms.Select(attrs={'class': 'form-control'}),
+            'car': forms.Select(attrs={'class': 'form-control'}),
         }
 
 
