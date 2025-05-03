@@ -2,11 +2,28 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group
 from .forms import TradeInForm, CreditRequestForm, CarOrderForm, CustomUserRegistrationForm, UserProfileForm, \
-    ApplicationStatusForm
-from .models import TestDriveRequest, Car, Employee, Client, Application, TradeInRequest, CreditRequest, CarOrder
+    ApplicationForm, ApplicationStatusForm, ChangeStatusForm
+from .models import Car, Employee, Application, TradeInRequest, CreditRequest, CarOrder
 from django.contrib import messages
+
+
+@login_required
+def create_application(request):
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.user = request.user  # Привязываем заявку к текущему пользователю
+            application.save()
+            messages.success(request, 'Заявка успешно отправлена!')
+            return redirect('some_success_url')
+    else:
+        form = ApplicationForm()
+
+    return render(request, 'main/application_form.html', {'form': form})
 
 
 def index(request):
@@ -84,36 +101,34 @@ def is_employee(user):
 
 
 @login_required
-@user_passes_test(is_employee)  # Убедитесь, что это условие правильно обрабатывает сотрудников
-def change_application_status(request, application_id):
-    application = get_object_or_404(Application, pk=application_id)
-
-    if request.method == "POST":
-        form = ApplicationStatusForm(request.POST, instance=application)
-        if form.is_valid():
-            form.save()
-            return redirect('application_detail', application_id=application.id)  # Перенаправление после сохранения
+def change_status(request, application_type, application_id):
+    # Determine the application type and get the respective model object
+    if application_type == 'tradein':
+        application_obj = get_object_or_404(TradeInRequest, id=application_id)
+    elif application_type == 'purchase':
+        application_obj = get_object_or_404(CarOrder, id=application_id)
+    elif application_type == 'credit':
+        application_obj = get_object_or_404(CreditRequest, id=application_id)
     else:
-        form = ApplicationStatusForm(instance=application)
+        # Handle invalid application type, e.g., 404 or redirect
+        return redirect('sales_employee')
 
-    return render(request, 'main/change_status.html', {
-        'form': form,
-        'application': application
-    })
-
-
-@login_required
-def change_status(request, application_id):
-    if not request.user.is_employee():
-        return redirect('profile')
-
-    app = get_object_or_404(Application, pk=application_id)
+    # Initialize the form with the application instance
     if request.method == 'POST':
-        new_status = request.POST.get('status')
-        app.status = new_status
-        app.save()
-        return redirect('profile')
-    return render(request, 'main/change_status.html', {'app': app})
+        form = ChangeStatusForm(request.POST, instance=application_obj)
+        if form.is_valid():
+            form.save()  # Save the updated status
+            return redirect('sales_employee')  # Redirect to the sales employee page
+    else:
+        form = ChangeStatusForm(instance=application_obj)
+
+    context = {
+        'form': form,
+        'application_type': application_type,
+        'application_obj': application_obj
+    }
+
+    return render(request, 'main/change_status.html', context)
 
 
 @login_required
@@ -132,10 +147,6 @@ def profile_view(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    testdrive_requests = TestDriveRequest.objects.filter(user=request.user)
-    testdrive_paginator = Paginator(testdrive_requests, 5)
-    testdrive_page_obj = testdrive_paginator.get_page(page_number)
-
     purchase_requests = CarOrder.objects.filter(user=request.user)
     purchase_paginator = Paginator(purchase_requests, 5)
     purchase_page_obj = purchase_paginator.get_page(page_number)
@@ -147,7 +158,6 @@ def profile_view(request):
     return render(request, 'main/profile.html', {
         'form': form,
         'page_obj': page_obj,
-        'testdrive_page_obj': testdrive_page_obj,
         'purchase_page_obj': purchase_page_obj,
         'credit_page_obj': credit_page_obj,
     })
@@ -157,7 +167,6 @@ def profile_view(request):
 def user_requests_view(request):
     user = request.user
     context = {
-        'test_drives': TestDriveRequest.objects.filter(user=user),
         'car_orders': CarOrder.objects.filter(user=user),
         'trade_ins': TradeInRequest.objects.filter(user=user),
         'credit_requests': CreditRequest.objects.filter(user=user),
@@ -181,10 +190,6 @@ def sales_employee(request):
     page_number = request.GET.get('page')
     tradein_page_obj = paginator.get_page(page_number)
 
-    testdrive_requests = TestDriveRequest.objects.all()
-    testdrive_paginator = Paginator(testdrive_requests, 5)
-    testdrive_page_obj = testdrive_paginator.get_page(page_number)
-
     purchase_requests = CarOrder.objects.all()
     purchase_paginator = Paginator(purchase_requests, 5)
     purchase_page_obj = purchase_paginator.get_page(page_number)
@@ -193,10 +198,10 @@ def sales_employee(request):
     credit_paginator = Paginator(credit_requests, 5)
     credit_page_obj = credit_paginator.get_page(page_number)
 
+    # Теперь мы передаем статус заявки в контекст для отображения
     return render(request, 'main/sales_profile.html', {
         'employee': employee,
         'tradein_page_obj': tradein_page_obj,
-        'testdrive_page_obj': testdrive_page_obj,
         'purchase_page_obj': purchase_page_obj,
         'credit_page_obj': credit_page_obj,
     })
@@ -207,9 +212,32 @@ def car_order_view(request):
     if request.method == 'POST':
         form = CarOrderForm(request.POST)
         if form.is_valid():
-            order = form.save(commit=False)
-            order.user = request.user
-            order.save()
+            # Создаем заявку
+            application = form.save(commit=False)
+            application.user = request.user
+
+            # Привязка заявки к соответствующему объекту (Car, TradeInRequest, или CreditRequest)
+            car = form.cleaned_data.get('car')
+            trade_in = form.cleaned_data.get('trade_in')
+            credit_request = form.cleaned_data.get('credit_request')
+
+            if car:
+                # Получаем ContentType для Car и связываем заявку
+                content_type = ContentType.objects.get_for_model(Car)
+                application.content_type = content_type
+                application.object_id = car.id
+            elif trade_in:
+                # Получаем ContentType для TradeInRequest и связываем заявку
+                content_type = ContentType.objects.get_for_model(TradeInRequest)
+                application.content_type = content_type
+                application.object_id = trade_in.id
+            elif credit_request:
+                # Получаем ContentType для CreditRequest и связываем заявку
+                content_type = ContentType.objects.get_for_model(CreditRequest)
+                application.content_type = content_type
+                application.object_id = credit_request.id
+
+            application.save()
             messages.success(request, 'Ваш заказ успешно оформлен!')
             return redirect('index')
     else:
@@ -223,11 +251,21 @@ def trade_in_request(request):
         form = TradeInForm(request.POST)
         if form.is_valid():
             trade_in = form.save(commit=False)
-            trade_in.user = request.user  # привязываем заявку к текущему пользователю
-            trade_in.save()
-            return redirect('trade_in_success')  # перенаправление на страницу успеха
+            trade_in.user = request.user  # Привязываем заявку к текущему пользователю
+            trade_in.save()  # Сохраняем заявку
+
+            # Создаем заявку типа "trade_in" в модели Application
+            application = Application.objects.create(
+                user=request.user,
+                content_type=ContentType.objects.get_for_model(TradeInRequest),
+                object_id=trade_in.id,
+                status='pending',  # Статус по умолчанию
+            )
+
+            return redirect('trade_in_success')  # Перенаправление на страницу успеха
     else:
         form = TradeInForm()
+
     return render(request, 'main/trade_in_form.html', {'form': form})
 
 
@@ -240,13 +278,23 @@ def car_detail(request, slug):
     return render(request, 'main/car_detail.html', {'car': car})
 
 
+@login_required
 def credit_info(request):
     if request.method == 'POST':
         form = CreditRequestForm(request.POST)
         if form.is_valid():
             credit_request = form.save(commit=False)
-            credit_request.user = request.user  # Привязка заявки к текущему пользователю
-            credit_request.save()
+            credit_request.user = request.user  # Привязываем заявку к текущему пользователю
+            credit_request.save()  # Сохраняем кредитную заявку
+
+            # Создаем заявку типа 'credit_request' в модели Application
+            application = Application.objects.create(
+                user=request.user,
+                content_type=ContentType.objects.get_for_model(CreditRequest),  # Указываем тип объекта как CreditRequest
+                object_id=credit_request.id,  # ID этой заявки
+                status='pending',  # Статус по умолчанию
+            )
+
             return redirect('credit_thanks')  # Перенаправление на страницу благодарности
     else:
         form = CreditRequestForm()

@@ -4,19 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Finally fixed redirects">
-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html" afterDir="false" />
+    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Need to fix Applications">
+      <change afterPath="$PROJECT_DIR$/carshowroom/main/signals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/apps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0002_alter_application_options_alter_customuser_managers_and_more.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/used_car_sale.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/views.py" afterDir="false" />
     </list>
@@ -95,12 +96,21 @@
       <option name="project" value="LOCAL" />
       <updated>1746183975463</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Need to fix Applications">
+      <option name="closed" value="true" />
+      <created>1746193154091</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746193154091</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Need to fix the link to the employee’s profile" />
     <MESSAGE value="Finally fixed redirects" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finally fixed redirects" />
+    <MESSAGE value="Need to fix Applications" />
+    <option name="LAST_COMMIT_MESSAGE" value="Need to fix Applications" />
   </component>
 </project>

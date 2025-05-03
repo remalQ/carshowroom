@@ -48,66 +48,17 @@
         <a href="?page=1">&laquo; первая</a>
         <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
       {% endif %}
-
       <span class="current">
         Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
       </span>
-
       {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}">следующая</a>
         <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
       {% endif %}
     </span>
   </div>
-
 {% else %}
   <p>Нет заявок на Trade-In</p>
-{% endif %}
-
-<hr>
-
-<h3>Заявки на Test Drive</h3>
-{% if testdrive_page_obj %}
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Дата</th>
-        <th>Модель автомобиля</th>
-        <th>Статус</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for r in testdrive_page_obj %}
-        <tr>
-          <td>{{ r.date }}</td>
-          <td>{{ r.car }}</td>
-          <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <!-- Пагинация -->
-  <div class="pagination">
-    <span class="step-links">
-      {% if testdrive_page_obj.has_previous %}
-        <a href="?page=1">&laquo; первая</a>
-        <a href="?page={{ testdrive_page_obj.previous_page_number }}">предыдущая</a>
-      {% endif %}
-
-      <span class="current">
-        Страница {{ testdrive_page_obj.number }} из {{ testdrive_page_obj.paginator.num_pages }}.
-      </span>
-
-      {% if testdrive_page_obj.has_next %}
-        <a href="?page={{ testdrive_page_obj.next_page_number }}">следующая</a>
-        <a href="?page={{ testdrive_page_obj.paginator.num_pages }}">последняя &raquo;</a>
-      {% endif %}
-    </span>
-  </div>
-
-{% else %}
-  <p>Нет заявок на Test Drive</p>
 {% endif %}
 
 <hr>
@@ -140,18 +91,15 @@
         <a href="?page=1">&laquo; первая</a>
         <a href="?page={{ purchase_page_obj.previous_page_number }}">предыдущая</a>
       {% endif %}
-
       <span class="current">
         Страница {{ purchase_page_obj.number }} из {{ purchase_page_obj.paginator.num_pages }}.
       </span>
-
       {% if purchase_page_obj.has_next %}
         <a href="?page={{ purchase_page_obj.next_page_number }}">следующая</a>
         <a href="?page={{ purchase_page_obj.paginator.num_pages }}">последняя &raquo;</a>
       {% endif %}
     </span>
   </div>
-
 {% else %}
   <p>Нет заявок на Покупку</p>
 {% endif %}
@@ -186,18 +134,15 @@
         <a href="?page=1">&laquo; первая</a>
         <a href="?page={{ credit_page_obj.previous_page_number }}">предыдущая</a>
       {% endif %}
-
       <span class="current">
         Страница {{ credit_page_obj.number }} из {{ credit_page_obj.paginator.num_pages }}.
       </span>
-
       {% if credit_page_obj.has_next %}
         <a href="?page={{ credit_page_obj.next_page_number }}">следующая</a>
         <a href="?page={{ credit_page_obj.paginator.num_pages }}">последняя &raquo;</a>
       {% endif %}
     </span>
   </div>
-
 {% else %}
   <p>Нет заявок на Кредит</p>
 {% endif %}

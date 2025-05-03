@@ -4,13 +4,55 @@
 {% block title %}Изменить статус заявки{% endblock %}
 
 {% block content %}
-<h2>Изменить статус заявки</h2>
+<div class="container mt-5">
+    <h2>Изменить статус заявки</h2>
+    <hr>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить изменения</button>
-</form>
+    <div class="card">
+        <div class="card-header">
+            <h5>Информация о заявке</h5>
+        </div>
+        <div class="card-body">
+            <!-- Displaying Full Details for Trade-In, Purchase, or Credit -->
+            <p><strong>Тип заявки:</strong> {{ request_type }}</p>
 
-<a href="{% url 'sales_employee' %}">Назад</a>
+            {% if request_type == 'tradein' %}
+                <p><strong>Модель автомобиля:</strong> {{ tradein_request.current_car_brand }} {{ tradein_request.current_car_model }}</p>
+                <p><strong>Год выпуска:</strong> {{ tradein_request.current_car_year }}</p>
+                <p><strong>Пробег:</strong> {{ tradein_request.current_car_mileage }} км</p>
+                <p><strong>Предполагаемая цена:</strong> {{ tradein_request.car_price }} ₽</p>
+            {% elif request_type == 'purchase' %}
+                <p><strong>Модель автомобиля:</strong> {{ purchase_request.car_model }}</p>
+                <p><strong>Цена автомобиля:</strong> {{ purchase_request.price }} ₽</p>
+                <p><strong>Дата заказа:</strong> {{ purchase_request.order_date }}</p>
+            {% elif request_type == 'credit' %}
+                <p><strong>Сумма кредита:</strong> {{ credit_request.amount }} ₽</p>
+                <p><strong>Срок кредита:</strong> {{ credit_request.loan_term }} месяцев</p>
+                <p><strong>Ежемесячный платеж:</strong> {{ credit_request.monthly_payment }} ₽</p>
+            {% endif %}
+
+            <p><strong>Текущий статус:</strong>
+                <span class="badge text-{{ current_status_class }}">{{ current_status }}</span>
+            </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h4 class="mt-4">Измените статус заявки</h4>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="status">Выберите новый статус:</label>
+            {{ form.status }}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Сохранить изменения</button>
+    </form>
+
+    <hr>
+    <div class="text-center">
+        <a href="{% url 'sales_employee' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</div>
 {% endblock %}

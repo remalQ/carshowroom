@@ -3,7 +3,9 @@ from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.auth.models import BaseUserManager
-from django.contrib.admin import SimpleListFilter
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
 
 STATUS_CHOICES = (
@@ -12,53 +14,6 @@ STATUS_CHOICES = (
     ('completed', 'Завершена'),
     ('rejected', 'Отклонена'),
 )
-
-
-class ClientStatusFilter(SimpleListFilter):
-    title = 'Клиент'
-    parameter_name = 'is_client'
-
-    def lookups(self, request, model_admin):
-        return (
-            ('yes', 'Да'),
-            ('no', 'Нет'),
-        )
-
-    def queryset(self, request, queryset):
-        value = self.value()
-        if value == 'yes':
-            return queryset.filter(client__isnull=False)
-        if value == 'no':
-            return queryset.filter(client__isnull=True)
-        return queryset
-
-
-class EmployeeStatusFilter(SimpleListFilter):
-    title = 'Сотрудник'
-    parameter_name = 'is_employee'
-
-    def lookups(self, request, model_admin):
-        return (
-            ('yes', 'Да'),
-            ('no', 'Нет'),
-        )
-
-    def queryset(self, request, queryset):
-        value = self.value()
-        if value == 'yes':
-            return queryset.filter(employee__isnull=False)
-        if value == 'no':
-            return queryset.filter(employee__isnull=True)
-        return queryset
-
-
-class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='customer_profile')
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
 
 
 class CustomUserManager(BaseUserManager):
@@ -100,42 +55,8 @@ class Car(models.Model):
         ]
 
 
-class TestDriveRequest(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Ожидает подтверждения'),
-        ('confirmed', 'Подтвержден'),
-        ('completed', 'Завершен'),
-        ('canceled', 'Отменен'),
-    ]
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    car = models.ForeignKey('Car', on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def get_status_class(self):
-        return {
-            'pending': 'warning',
-            'confirmed': 'success',
-            'completed': 'info',
-            'canceled': 'danger',
-        }.get(self.status, 'secondary')
-
-    def __str__(self):
-        return f"Test Drive: {self.car} ({self.get_status_display()})"
-
-    class Meta:
-        ordering = ['-created_at']
-
-
 class CarOrder(models.Model):
-    STATUS_CHOICES = [
-        ('new', 'Новая'),
-        ('in_progress', 'В процессе'),
-        ('completed', 'Завершена'),
-        ('cancelled', 'Отменена'),
-    ]
+    STATUS_CHOICES = STATUS_CHOICES
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
@@ -151,10 +72,7 @@ class CarOrder(models.Model):
 
 # Модель для заявки на трейд-ин (TradeInRequest)
 class TradeInRequest(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'В обработке'),
-        ('contacted', 'Связались'),
-    ]
+    STATUS_CHOICES = STATUS_CHOICES
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     current_car_brand = models.CharField(max_length=255)
@@ -177,11 +95,7 @@ class TradeInRequest(models.Model):
 
 # Модель для заявки на кредит (CreditRequest)
 class CreditRequest(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'В обработке'),
-        ('approved', 'Одобрено'),
-        ('rejected', 'Отклонено'),
-    ]
+    STATUS_CHOICES = STATUS_CHOICES
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
@@ -214,7 +128,7 @@ class CarConfiguration(models.Model):
 
 class CustomUser(AbstractUser):
     def is_employee(self):
-        return self.groups.filter(name="Сотрудники").exists()
+        return self.groups.filter(name="Менеджеры").exists()
 
     def is_client(self):
         return not self.is_employee()
@@ -248,36 +162,23 @@ class Employee(models.Model):
         return f"Сотрудник: {self.user.get_full_name() or self.user.email}"
 
 
-class SaleContract(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    sales_employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, blank=True)  # Сотрудник, который оформил продажу
-    sale_price = models.DecimalField(max_digits=10, decimal_places=2)
-    contract_date = models.DateTimeField(auto_now_add=True)
-    is_paid = models.BooleanField(default=False)
-    sale_type = models.CharField(max_length=50, choices=[('used', 'Авто с пробегом'), ('new', 'Новое авто')])
-
-    def __str__(self):
-        return f"Договор продажи {self.car.model} - {self.user.username}"
-
-
 class Application(models.Model):
-    STATUS_CHOICES = [
-        ('new', 'Новая'),
-        ('in_progress', 'В процессе'),
-        ('completed', 'Завершена'),
-        ('rejected', 'Отклонена'),
-    ]
+    STATUS_PENDING = 'pending'
+    STATUS_APPROVED = 'approved'
+    STATUS_REJECTED = 'rejected'
 
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=255, null=False, default='Нет описания')
+    STATUS_CHOICES = STATUS_CHOICES
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
+    object_id = models.PositiveIntegerField(null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='new',
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.title
+        return f"{self.content_type} #{self.object_id} ({self.status})"
+
+    def title(self):
+        return str(self.content_object)
