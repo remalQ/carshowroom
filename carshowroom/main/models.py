@@ -8,14 +8,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 
 
-STATUS_CHOICES = (
-    ('new', 'Новая'),
-    ('in_progress', 'В обработке'),
-    ('completed', 'Завершена'),
-    ('rejected', 'Отклонена'),
-)
-
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -56,12 +48,17 @@ class Car(models.Model):
 
 
 class CarOrder(models.Model):
-    STATUS_CHOICES = STATUS_CHOICES
+    STATUS_CHOICES = [
+        ('pending', 'В ожидании'),
+        ('approved', 'Одобрено'),
+        ('rejected', 'Отклонено'),
+        ('in_progress', 'В процессе'),
+    ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
         return f"Заказ {self.car} — {self.get_status_display()}"
@@ -69,10 +66,17 @@ class CarOrder(models.Model):
     class Meta:
         ordering = ['-order_date']
 
+    def get_status_class(self):
+        return {
+            'pending': 'secondary',
+            'approved': 'success',
+            'rejected': 'danger',
+            'in_progress': 'info',
+        }.get(self.status, 'secondary')
 
-# Модель для заявки на трейд-ин (TradeInRequest)
+
 class TradeInRequest(models.Model):
-    STATUS_CHOICES = STATUS_CHOICES
+    STATUS_CHOICES = CarOrder.STATUS_CHOICES
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     current_car_brand = models.CharField(max_length=255)
@@ -92,10 +96,17 @@ class TradeInRequest(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def get_status_class(self):
+        return {
+            'pending': 'secondary',
+            'approved': 'success',
+            'rejected': 'danger',
+            'in_progress': 'info',
+        }.get(self.status, 'secondary')
 
-# Модель для заявки на кредит (CreditRequest)
+
 class CreditRequest(models.Model):
-    STATUS_CHOICES = STATUS_CHOICES
+    STATUS_CHOICES = CarOrder.STATUS_CHOICES
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
@@ -112,6 +123,14 @@ class CreditRequest(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+    def get_status_class(self):
+        return {
+            'pending': 'secondary',
+            'approved': 'success',
+            'rejected': 'danger',
+            'in_progress': 'info',
+        }.get(self.status, 'secondary')
 
 
 class CarConfiguration(models.Model):
@@ -167,7 +186,12 @@ class Application(models.Model):
     STATUS_APPROVED = 'approved'
     STATUS_REJECTED = 'rejected'
 
-    STATUS_CHOICES = STATUS_CHOICES
+    STATUS_CHOICES = [
+        ('pending', 'В ожидании'),
+        ('approved', 'Одобрено'),
+        ('rejected', 'Отклонено'),
+        ('in_progress', 'В процессе'),
+    ]
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True)
     object_id = models.PositiveIntegerField(null=True)

@@ -3,6 +3,46 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import CarOrder, CustomUser, TradeInRequest, CreditRequest, Application, Car
 from django.contrib.contenttypes.models import ContentType
 
+STATUS_CHOICES = [
+    ('pending', 'В ожидании'),
+    ('approved', 'Одобрено'),
+    ('rejected', 'Отклонено'),
+    ('in_progress', 'В процессе'),
+]
+
+
+class TradeInStatusForm(forms.ModelForm):
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = TradeInRequest
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+class CarOrderStatusForm(forms.ModelForm):
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = CarOrder
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+class CreditStatusForm(forms.ModelForm):
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = CreditRequest
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-select'}),
+        }
+
 
 class ChangeStatusForm(forms.ModelForm):
     # Define the choices for status
@@ -101,24 +141,3 @@ class CustomUserRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-
-class CarOrderForm(forms.ModelForm):
-    class Meta:
-        model = CarOrder
-        fields = ['car']
-        widgets = {
-            'car': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-
-class TradeInForm(forms.ModelForm):
-    class Meta:
-        model = TradeInRequest
-        fields = ['current_car_brand', 'current_car_model', 'year', 'mileage', 'desired_car', 'phone', 'email', 'comment']
-
-
-class CreditRequestForm(forms.ModelForm):
-    class Meta:
-        model = CreditRequest
-        fields = ['car', 'full_name', 'phone', 'email', 'amount', 'duration']

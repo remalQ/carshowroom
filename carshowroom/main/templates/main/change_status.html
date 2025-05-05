@@ -1,6 +1,5 @@
 <!-- change_status.html -->
 {% extends 'main/layout.html' %}
-
 {% block title %}Изменить статус заявки{% endblock %}
 
 {% block content %}
@@ -13,26 +12,22 @@
             <h5>Информация о заявке</h5>
         </div>
         <div class="card-body">
-            <!-- Displaying Full Details for Trade-In, Purchase, or Credit -->
-            <p><strong>Тип заявки:</strong> {{ request_type }}</p>
+            <p><strong>Товар:</strong> {{ application_obj.car }}</p>
+            <p><strong>Пользователь:</strong> {{ application_obj.user.username }}</p>
 
-            {% if request_type == 'tradein' %}
-                <p><strong>Модель автомобиля:</strong> {{ tradein_request.current_car_brand }} {{ tradein_request.current_car_model }}</p>
-                <p><strong>Год выпуска:</strong> {{ tradein_request.current_car_year }}</p>
-                <p><strong>Пробег:</strong> {{ tradein_request.current_car_mileage }} км</p>
-                <p><strong>Предполагаемая цена:</strong> {{ tradein_request.car_price }} ₽</p>
-            {% elif request_type == 'purchase' %}
-                <p><strong>Модель автомобиля:</strong> {{ purchase_request.car_model }}</p>
-                <p><strong>Цена автомобиля:</strong> {{ purchase_request.price }} ₽</p>
-                <p><strong>Дата заказа:</strong> {{ purchase_request.order_date }}</p>
-            {% elif request_type == 'credit' %}
-                <p><strong>Сумма кредита:</strong> {{ credit_request.amount }} ₽</p>
-                <p><strong>Срок кредита:</strong> {{ credit_request.loan_term }} месяцев</p>
-                <p><strong>Ежемесячный платеж:</strong> {{ credit_request.monthly_payment }} ₽</p>
+            {% if application_type == 'tradein' %}
+                <p><strong>Авто клиента:</strong> {{ application_obj.current_car_brand }} {{ application_obj.current_car_model }}</p>
+                <p><strong>Год:</strong> {{ application_obj.year }}</p>
+            {% elif application_type == 'purchase' %}
+                <p><strong>Модель:</strong> {{ application_obj.car }}</p>
+                <p><strong>Дата заказа:</strong> {{ application_obj.order_date }}</p>
+            {% elif application_type == 'credit' %}
+                <p><strong>Кредит на авто:</strong> {{ application_obj.car }}</p>
+                <p><strong>Сумма:</strong> {{ application_obj.amount }} ₽</p>
             {% endif %}
 
             <p><strong>Текущий статус:</strong>
-                <span class="badge text-{{ current_status_class }}">{{ current_status }}</span>
+                <span class="badge text-bg-{{ current_status_class }}">{{ current_status }}</span>
             </p>
         </div>
     </div>

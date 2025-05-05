@@ -4,8 +4,8 @@ from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group
-from .forms import TradeInForm, CreditRequestForm, CarOrderForm, CustomUserRegistrationForm, UserProfileForm, \
-    ApplicationForm, ApplicationStatusForm, ChangeStatusForm
+from .forms import TradeInStatusForm, CreditStatusForm, CarOrderStatusForm, CustomUserRegistrationForm, UserProfileForm, \
+    ApplicationForm, ChangeStatusForm
 from .models import Car, Employee, Application, TradeInRequest, CreditRequest, CarOrder
 from django.contrib import messages
 
@@ -102,33 +102,35 @@ def is_employee(user):
 
 @login_required
 def change_status(request, application_type, application_id):
-    # Determine the application type and get the respective model object
     if application_type == 'tradein':
         application_obj = get_object_or_404(TradeInRequest, id=application_id)
+        form_class = TradeInStatusForm
     elif application_type == 'purchase':
         application_obj = get_object_or_404(CarOrder, id=application_id)
+        form_class = CarOrderStatusForm
     elif application_type == 'credit':
         application_obj = get_object_or_404(CreditRequest, id=application_id)
+        form_class = CreditStatusForm
     else:
-        # Handle invalid application type, e.g., 404 or redirect
         return redirect('sales_employee')
 
-    # Initialize the form with the application instance
     if request.method == 'POST':
-        form = ChangeStatusForm(request.POST, instance=application_obj)
+        form = form_class(request.POST, instance=application_obj)
         if form.is_valid():
-            form.save()  # Save the updated status
-            return redirect('sales_employee')  # Redirect to the sales employee page
+            form.save()
+            return redirect('sales_employee')
     else:
-        form = ChangeStatusForm(instance=application_obj)
+        form = form_class(instance=application_obj)
 
     context = {
+        'application_obj': application_obj,
+        'current_status': application_obj.status,  # статус из модели
+        'current_status_class': application_obj.get_status_class(),  # класс для стиля
         'form': form,
-        'application_type': application_type,
-        'application_obj': application_obj
     }
 
     return render(request, 'main/change_status.html', context)
+
 
 
 @login_required
@@ -210,7 +212,7 @@ def sales_employee(request):
 @login_required
 def car_order_view(request):
     if request.method == 'POST':
-        form = CarOrderForm(request.POST)
+        form = CarOrderStatusForm(request.POST)
         if form.is_valid():
             # Создаем заявку
             application = form.save(commit=False)
@@ -241,14 +243,14 @@ def car_order_view(request):
             messages.success(request, 'Ваш заказ успешно оформлен!')
             return redirect('index')
     else:
-        form = CarOrderForm()
+        form = CarOrderStatusForm()
     return render(request, 'main/car_order.html', {'form': form})
 
 
 @login_required
 def trade_in_request(request):
     if request.method == 'POST':
-        form = TradeInForm(request.POST)
+        form = (TradeInStatusForm(request.POST))
         if form.is_valid():
             trade_in = form.save(commit=False)
             trade_in.user = request.user  # Привязываем заявку к текущему пользователю
@@ -264,7 +266,7 @@ def trade_in_request(request):
 
             return redirect('trade_in_success')  # Перенаправление на страницу успеха
     else:
-        form = TradeInForm()
+        form = TradeInStatusForm()
 
     return render(request, 'main/trade_in_form.html', {'form': form})
 
@@ -281,7 +283,7 @@ def car_detail(request, slug):
 @login_required
 def credit_info(request):
     if request.method == 'POST':
-        form = CreditRequestForm(request.POST)
+        form = CreditStatusForm(request.POST)
         if form.is_valid():
             credit_request = form.save(commit=False)
             credit_request.user = request.user  # Привязываем заявку к текущему пользователю
@@ -297,7 +299,7 @@ def credit_info(request):
 
             return redirect('credit_thanks')  # Перенаправление на страницу благодарности
     else:
-        form = CreditRequestForm()
+        form = CreditStatusForm()
 
     return render(request, 'main/credit_info.html', {'form': form})
 

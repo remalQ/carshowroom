@@ -1,0 +1,139 @@
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Black\">\r\n    <option name=\"sdkName\" value=\"Python 3.12 (CarShowroom)\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.12 (CarShowroom)\" project-jdk-type=\"Python SDK\" />\r\n  <component name=\"PyCharmProfessionalAdvertiser\">\r\n    <option name=\"shown\" value=\"true\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 32e955bd1328f9510074204d1ba3b94c17690e43)
++++ b/.idea/misc.xml	(date 1745901878068)
+@@ -3,7 +3,7 @@
+   <component name="Black">
+     <option name="sdkName" value="Python 3.12 (CarShowroom)" />
+   </component>
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (CarShowroom)" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (lab11)" project-jdk-type="Python SDK" />
+   <component name="PyCharmProfessionalAdvertiser">
+     <option name="shown" value="true" />
+   </component>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"78f3a609-f353-40ab-9dd1-e15cd4802939\" name=\"Changes\" comment=\"Need to fix logout, car models in home page, create a buying system\">\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/credit_info.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/credit_thanks.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/new_car_sale.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/sale_success.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_form.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_success.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/used_car_sale.html\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templatetags/__init__.py\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templatetags/custom_filters.py\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/templatetags/employee_tags.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/carshowroom/settings.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/carshowroom/settings.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/carshowroom/urls.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/carshowroom/urls.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/db.sqlite3\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/db.sqlite3\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/forms.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/forms.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/models.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/models.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/index.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/layout.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/layout.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/profile.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/profile.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/tradein_requests.html\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/urls.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/urls.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/views.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2wG03NQ6tsfWbAMnBY1uyqDdWKE\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/lilma/PycharmProjects/CarShowroom/carshowroom/main/static/main/img&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\lilma\\PycharmProjects\\CarShowroom\\carshowroom\\main\\static\\main\\img\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\lilma\\PycharmProjects\\CarShowroom\\carshowroom\\main\\static\\main\\img\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"78f3a609-f353-40ab-9dd1-e15cd4802939\" name=\"Changes\" comment=\"\" />\r\n      <created>1745652402878</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1745652402878</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Create django-project\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1745652702717</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1745652702717</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Need to fix logout, car models in home page, create a buying system\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1745680089861</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1745680089861</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Create django-project\" />\r\n    <MESSAGE value=\"Need to fix logout, car models in home page, create a buying system\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Need to fix logout, car models in home page, create a buying system\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 32e955bd1328f9510074204d1ba3b94c17690e43)
++++ b/.idea/workspace.xml	(date 1745904756182)
+@@ -5,30 +5,12 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="78f3a609-f353-40ab-9dd1-e15cd4802939" name="Changes" comment="Need to fix logout, car models in home page, create a buying system">
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/credit_info.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/credit_thanks.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/new_car_sale.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sale_success.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_form.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/trade_in_success.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/used_car_sale.html" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/__init__.py" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/custom_filters.py" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/templatetags/employee_tags.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/CarShowroom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CarShowroom.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/settings.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/carshowroom/urls.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/car_detail.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/index.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/layout.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/tradein_requests.html" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/views.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -56,13 +38,14 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/lilma/PycharmProjects/CarShowroom/carshowroom/main/static/main/img&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "master",
++    "last_opened_file_path": "C:/Users/lilma/PycharmProjects/CarShowroom/carshowroom/main/static/main/img",
++    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\lilma\PycharmProjects\CarShowroom\carshowroom\main\static\main\img" />
+@@ -109,6 +92,7 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Create django-project" />
+     <MESSAGE value="Need to fix logout, car models in home page, create a buying system" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Need to fix logout, car models in home page, create a buying system" />
++    <MESSAGE value="/" />
++    <option name="LAST_COMMIT_MESSAGE" value="/" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/CarShowroom.iml\" filepath=\"$PROJECT_DIR$/.idea/CarShowroom.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision 32e955bd1328f9510074204d1ba3b94c17690e43)
++++ b/.idea/modules.xml	(date 1745901878038)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/CarShowroom.iml" filepath="$PROJECT_DIR$/.idea/CarShowroom.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/carshowroom.iml" filepath="$PROJECT_DIR$/.idea/carshowroom.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/CarShowroom.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/.venv\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/CarShowroom.iml b/.idea/CarShowroom.iml
+--- a/.idea/CarShowroom.iml	(revision 32e955bd1328f9510074204d1ba3b94c17690e43)
++++ b/.idea/CarShowroom.iml	(date 1745901878022)
+@@ -1,10 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <module type="PYTHON_MODULE" version="4">
+   <component name="NewModuleRootManager">
+-    <content url="file://$MODULE_DIR$">
+-      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+-    </content>
+-    <orderEntry type="inheritedJdk" />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="jdk" jdkName="Python 3.8 (lab11)" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+ </module>
+\ No newline at end of file
