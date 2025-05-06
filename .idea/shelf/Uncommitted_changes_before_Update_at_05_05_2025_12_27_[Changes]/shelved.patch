@@ -1,0 +1,61 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"30a49383-fe17-4834-b82c-1c3fa750865d\" name=\"Changes\" comment=\"Need to fix Applications\">\r\n      <change afterPath=\"$PROJECT_DIR$/carshowroom/main/signals.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/db.sqlite3\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/db.sqlite3\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/admin.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/admin.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/apps.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/apps.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/forms.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/forms.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/migrations/0001_initial.py\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/models.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/models.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/login.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/login.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/profile.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/profile.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/urls.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/urls.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/carshowroom/main/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/carshowroom/main/views.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 6\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2wInQlhXa0fUyg1UNaShcQWt1Oi\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"30a49383-fe17-4834-b82c-1c3fa750865d\" name=\"Changes\" comment=\"\" />\r\n      <created>1745737942549</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1745737942549</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Need to fix the link to the employee’s profile\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1745944650987</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1745944650987</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Need to fix the link to the employee’s profile\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1746173844998</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1746173844998</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Finally fixed redirects\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1746183975463</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1746183975463</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Need to fix Applications\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1746193154091</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1746193154091</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Need to fix the link to the employee’s profile\" />\r\n    <MESSAGE value=\"Finally fixed redirects\" />\r\n    <MESSAGE value=\"Need to fix Applications\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Need to fix Applications\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c2182713e5dcce10cd390f07e3c3c6d75aa84819)
++++ b/.idea/workspace.xml	(date 1746268469773)
+@@ -4,23 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Need to fix Applications">
+-      <change afterPath="$PROJECT_DIR$/carshowroom/main/signals.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/admin.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/apps.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/migrations/0001_initial.py" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/change_status.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/login.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/profile.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/user_requests.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/urls.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/carshowroom/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/views.py" afterDir="false" />
+-    </list>
++    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Need to fix display of changes in application status" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -104,13 +88,22 @@
+       <option name="project" value="LOCAL" />
+       <updated>1746193154091</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00005" summary="Need to fix display of changes in application status">
++      <option name="closed" value="true" />
++      <created>1746268463759</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1746268463759</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Need to fix the link to the employee’s profile" />
+     <MESSAGE value="Finally fixed redirects" />
+     <MESSAGE value="Need to fix Applications" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Need to fix Applications" />
++    <MESSAGE value="Need to fix display of changes in application status" />
++    <option name="LAST_COMMIT_MESSAGE" value="Need to fix display of changes in application status" />
+   </component>
+ </project>
+\ No newline at end of file

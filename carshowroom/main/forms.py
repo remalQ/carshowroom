@@ -44,50 +44,6 @@ class CreditStatusForm(forms.ModelForm):
         }
 
 
-class ChangeStatusForm(forms.ModelForm):
-    # Define the choices for status
-    STATUS_CHOICES = [
-        ('pending', 'В ожидании'),
-        ('approved', 'Одобрено'),
-        ('rejected', 'Отклонено'),
-        ('in_progress', 'В процессе'),
-        # Add other statuses if necessary
-    ]
-
-    # Create a status field for the form
-    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = None  # Model will be dynamically assigned later
-        fields = ['status']
-
-    def __init__(self, *args, **kwargs):
-        # Dynamically set the model based on the request object
-        request_obj = kwargs.get('instance')
-
-        if isinstance(request_obj, TradeInRequest):
-            self.Meta.model = TradeInRequest
-        elif isinstance(request_obj, CarOrder):
-            self.Meta.model = CarOrder
-        elif isinstance(request_obj, CreditRequest):
-            self.Meta.model = CreditRequest
-        else:
-            raise ValueError("Unknown application type")
-
-    def save(self, commit=True):
-        # Ensure the form saves the new status to the model instance
-        instance = super().save(commit=False)
-        if commit:
-            instance.save()
-        return instance
-
-
-class ApplicationStatusForm(forms.ModelForm):
-    class Meta:
-        model = Application
-        fields = ['status']
-
-
 class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
@@ -141,3 +97,42 @@ class CustomUserRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class TradeInCreateForm(forms.ModelForm):
+    class Meta:
+        model = TradeInRequest
+        exclude = ['user', 'created_at', 'status']
+        widgets = {
+            'current_car_brand': forms.TextInput(attrs={'class': 'form-control'}),
+            'current_car_model': forms.TextInput(attrs={'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'class': 'form-control'}),
+            'mileage': forms.NumberInput(attrs={'class': 'form-control'}),
+            'desired_car': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
+class CarOrderCreateForm(forms.ModelForm):
+    class Meta:
+        model = CarOrder
+        exclude = ['user', 'order_date', 'status']
+        widgets = {
+            'car': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+class CreditCreateForm(forms.ModelForm):
+    class Meta:
+        model = CreditRequest
+        exclude = ['user', 'status', 'created_at']
+        widgets = {
+            'car': forms.Select(attrs={'class': 'form-select'}),
+            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group
 from .forms import TradeInStatusForm, CreditStatusForm, CarOrderStatusForm, CustomUserRegistrationForm, UserProfileForm, \
-    ApplicationForm, ChangeStatusForm
+    ApplicationForm, CarOrderCreateForm, TradeInCreateForm, CreditCreateForm
 from .models import Car, Employee, Application, TradeInRequest, CreditRequest, CarOrder
 from django.contrib import messages
 
@@ -132,7 +132,6 @@ def change_status(request, application_type, application_id):
     return render(request, 'main/change_status.html', context)
 
 
-
 @login_required
 def profile_view(request):
     if request.method == 'POST':
@@ -212,63 +211,51 @@ def sales_employee(request):
 @login_required
 def car_order_view(request):
     if request.method == 'POST':
-        form = CarOrderStatusForm(request.POST)
+        form = CarOrderCreateForm(request.POST)
         if form.is_valid():
-            # Создаем заявку
-            application = form.save(commit=False)
-            application.user = request.user
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
 
-            # Привязка заявки к соответствующему объекту (Car, TradeInRequest, или CreditRequest)
-            car = form.cleaned_data.get('car')
-            trade_in = form.cleaned_data.get('trade_in')
-            credit_request = form.cleaned_data.get('credit_request')
+            # Создание записи в Application
+            Application.objects.create(
+                user=request.user,
+                content_type=ContentType.objects.get_for_model(CarOrder),
+                object_id=order.id,
+                status='pending'
+            )
 
-            if car:
-                # Получаем ContentType для Car и связываем заявку
-                content_type = ContentType.objects.get_for_model(Car)
-                application.content_type = content_type
-                application.object_id = car.id
-            elif trade_in:
-                # Получаем ContentType для TradeInRequest и связываем заявку
-                content_type = ContentType.objects.get_for_model(TradeInRequest)
-                application.content_type = content_type
-                application.object_id = trade_in.id
-            elif credit_request:
-                # Получаем ContentType для CreditRequest и связываем заявку
-                content_type = ContentType.objects.get_for_model(CreditRequest)
-                application.content_type = content_type
-                application.object_id = credit_request.id
-
-            application.save()
             messages.success(request, 'Ваш заказ успешно оформлен!')
             return redirect('index')
     else:
-        form = CarOrderStatusForm()
+        form = CarOrderCreateForm()
     return render(request, 'main/car_order.html', {'form': form})
 
 
 @login_required
 def trade_in_request(request):
     if request.method == 'POST':
-        form = (TradeInStatusForm(request.POST))
+        form = TradeInCreateForm(request.POST)
         if form.is_valid():
             trade_in = form.save(commit=False)
-            trade_in.user = request.user  # Привязываем заявку к текущему пользователю
-            trade_in.save()  # Сохраняем заявку
+            trade_in.user = request.user
+            trade_in.save()
 
-            # Создаем заявку типа "trade_in" в модели Application
-            application = Application.objects.create(
+            # Создаем заявку в Application
+            Application.objects.create(
                 user=request.user,
                 content_type=ContentType.objects.get_for_model(TradeInRequest),
                 object_id=trade_in.id,
-                status='pending',  # Статус по умолчанию
+                status='pending'
             )
 
-            return redirect('trade_in_success')  # Перенаправление на страницу успеха
+            messages.success(request, 'Заявка на трейд-ин отправлена!')
+            return redirect('trade_in_success')
     else:
-        form = TradeInStatusForm()
+        form = TradeInCreateForm()
 
     return render(request, 'main/trade_in_form.html', {'form': form})
+
 
 
 def trade_in_success(request):
@@ -283,25 +270,27 @@ def car_detail(request, slug):
 @login_required
 def credit_info(request):
     if request.method == 'POST':
-        form = CreditStatusForm(request.POST)
+        form = CreditCreateForm(request.POST)
         if form.is_valid():
-            credit_request = form.save(commit=False)
-            credit_request.user = request.user  # Привязываем заявку к текущему пользователю
-            credit_request.save()  # Сохраняем кредитную заявку
+            credit = form.save(commit=False)
+            credit.user = request.user
+            credit.save()
 
-            # Создаем заявку типа 'credit_request' в модели Application
-            application = Application.objects.create(
+            # Создаем заявку в Application
+            Application.objects.create(
                 user=request.user,
-                content_type=ContentType.objects.get_for_model(CreditRequest),  # Указываем тип объекта как CreditRequest
-                object_id=credit_request.id,  # ID этой заявки
-                status='pending',  # Статус по умолчанию
+                content_type=ContentType.objects.get_for_model(CreditRequest),
+                object_id=credit.id,
+                status='pending'
             )
 
-            return redirect('credit_thanks')  # Перенаправление на страницу благодарности
+            messages.success(request, 'Заявка на кредит отправлена!')
+            return redirect('credit_thanks')
     else:
-        form = CreditStatusForm()
+        form = CreditCreateForm()
 
     return render(request, 'main/credit_info.html', {'form': form})
+
 
 
 def credit_thanks(request):
