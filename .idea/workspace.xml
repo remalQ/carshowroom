@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="Need to fix display of changes in application status">
-      <change beforePath="$PROJECT_DIR$/.idea/CarShowroom.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CarShowroom.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2025_8_07__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2025_8_07__Changes_.xml" afterDir="false" />
+    <list default="true" id="30a49383-fe17-4834-b82c-1c3fa750865d" name="Changes" comment="The CarShowroom project is finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/carshowroom/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/carshowroom/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/carshowroom/main/templates/main/sales_profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,13 +93,22 @@
       <option name="project" value="LOCAL" />
       <updated>1746193154091</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="The CarShowroom project is finished">
+      <option name="closed" value="true" />
+      <created>1746544190531</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746544190531</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Need to fix the link to the employee’s profile" />
     <MESSAGE value="Finally fixed redirects" />
     <MESSAGE value="Need to fix Applications" />
-    <option name="LAST_COMMIT_MESSAGE" value="Need to fix Applications" />
+    <MESSAGE value="The CarShowroom project is finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="The CarShowroom project is finished" />
   </component>
 </project>

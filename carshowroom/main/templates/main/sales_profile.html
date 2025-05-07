@@ -29,7 +29,12 @@
             {% for r in tradein_page_obj %}
                 <tr>
                     <td>{{ r.created_at }}</td>
-                    <td>{{ r.current_car_brand }} {{ r.current_car_model }}</td>
+                    <td>
+                        {{ r.current_car_brand }} {{ r.current_car_model }}<br>
+                        Год: {{ r.current_car_year }}<br>
+                        Пробег: {{ r.current_car_mileage }} км<br>
+                        Цвет: {{ r.current_car_color }}
+                    </td>
                     <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
                     <td>
                         <a href="{% url 'change_status' 'tradein' r.id %}" class="btn btn-warning">Изменить статус</a>
@@ -76,7 +81,9 @@
             {% for r in purchase_page_obj %}
                 <tr>
                     <td>{{ r.order_date }}</td>
-                    <td>{{ r.car_model }}</td>
+                    <td>
+                        {{ r.car }}<br>
+                    </td>
                     <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
                     <td>
                         <a href="{% url 'change_status' 'purchase' r.id %}" class="btn btn-warning">Изменить статус</a>

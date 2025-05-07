@@ -77,7 +77,7 @@
       {% for r in purchase_page_obj %}
         <tr>
           <td>{{ r.order_date }}</td>
-          <td>{{ r.car_model }}</td>
+          <td>{{ r.car }}</td>
           <td class="text-{{ r.get_status_class }}">{{ r.get_status_display }}</td>
         </tr>
       {% endfor %}

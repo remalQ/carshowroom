@@ -57,11 +57,15 @@ class CarOrder(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey('Car', on_delete=models.CASCADE)
+    configuration = models.ForeignKey('CarConfiguration', on_delete=models.SET_NULL, null=True, blank=True)  # Добавлено!
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
-        return f"Заказ {self.car} — {self.get_status_display()}"
+        base = f"Заказ {self.car}"
+        if self.configuration:
+            base += f" ({self.configuration.color}, {self.configuration.engine_type})"
+        return f"{base} — {self.get_status_display()}"
 
     class Meta:
         ordering = ['-order_date']
@@ -142,7 +146,7 @@ class CarConfiguration(models.Model):
     available = models.BooleanField(default=True)  # Доступность комплектации
 
     def __str__(self):
-        return f"{self.car.model} - {self.color}, {self.engine_type}"
+        return f"{self.car.model} ({self.color}, {self.engine_type})"
 
 
 class CustomUser(AbstractUser):
